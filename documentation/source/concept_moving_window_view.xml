@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title>MovingWindowView</title>
+
+  <section>
+    <title>Summary</title>
+
+    <para>A MovingWindowView object is a Range over all pixels of a raster map
+    that at each pixel yields the Indicator corresponding to a Window
+    surrounding the pixel.</para>
+  </section>
+
+  <section>
+    <title>Refinement of</title>
+
+    <para>Range</para>
+  </section>
+
+  <section>
+    <title>Associated Types</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Notation</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Definitions</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Valid Expressions</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Expression Semantics</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Complexity Guarentees</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Invariants</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Models</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Notes</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para/>
+  </section>
+</section>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title>make_moving_window_view</title>
+
+  <section>
+    <title>Prototype</title>
+
+    <para><code>namespace moving_window {</code></para>
+
+    <para><code> template&lt;typename IndicatorTag, typename Window, typename
+    Raster&gt; </code></para>
+
+    <para><code>moving_window_view&lt;IndicatorTag, Window, Raster&gt;
+    </code></para>
+
+    <para><code>make_moving_window_view(const IndicatorTag&amp;, Window&amp;
+    window , Raster* raster)</code></para>
+
+    <para><code><para><code> </code></para><para><code>template&lt;typename
+    IndicatorTag, typename Window, typename Raster , typename WeightRaster&gt;
+    </code></para><para><code>moving_window_view&lt;IndicatorTag, Window,
+    Raster, WeightRaster&gt;
+    </code></para><para><code>make_moving_window_view(const IndicatorTag&amp;,
+    Window&amp; window , Raster* raster, WeightRaster*
+    weight)</code></para>}</code></para>
+  </section>
+
+  <section>
+    <title>Description</title>
+
+    <para>This function creates a moving_window_view object which presents a
+    view of the input raster (and optionally the weight raster) according to
+    the indicator specified by IndicatorTag and the window object (that
+    typically results from the make_window function.</para>
+  </section>
+
+  <section>
+    <title>Definition</title>
+
+    <para>The function is defined in "moving_window/moving_window_view.h".
+    </para>
+  </section>
+
+  <section>
+    <title>Type requirements</title>
+
+    <para><code>Window must conform to the (not yet formalized) Window
+    concept. IndicatorTag must be a tag associated with a (not yet
+    formalized)IndicatorConcept class. Raster and WeightRaster must conform to
+    the (not yet formalized) raster concept, for instance
+    gdal_raster&lt;int&gt;</code></para>
+  </section>
+
+  <section>
+    <title>Preconditions</title>
+
+    <para>Raster and WeightRaster must exist and have the same size</para>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para>The following creates a moving_window_view.</para>
+
+    <para><programlisting>auto ras = moving_window::open_gdal_raster&lt;int&gt;("input.txt");
+auto win = moving_window::make_window(moving_window::square_tag(), 5);
+auto tag = moving_window::area_weighted_patch_size_tag();
+auto view = moving_window::make_moving_window_view(tag, win, ras);</programlisting></para>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para>MovingWindowViewConcept</para>
+  </section>
+</section>

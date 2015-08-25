@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title>make_zip_range</title>
+
+  <para>A page that documents a function has the following sections.</para>
+
+  <section>
+    <title>Prototype</title>
+
+    <para>the function's declaration.</para>
+  </section>
+
+  <section>
+    <title>Description</title>
+
+    <para>A summary of what the function does.</para>
+  </section>
+
+  <section>
+    <title>Definition</title>
+
+    <para>A link to the source code where the function is defined.</para>
+  </section>
+
+  <section>
+    <title>Type requirements</title>
+
+    <para>Most functions in the STL are function templates. This section lists
+    the requirements that must be satisfied by the function's template
+    parameters. Sometimes the requirements can simply be expressed by listing
+    which concept a template parameter must conform to, but sometimes they are
+    more complicated and involve a relationship between two different template
+    parameters. In the case of find, for example, the requirements are that
+    the parameter InputIterator is a model of Input Iterator, that the
+    parameter EqualityComparable is a model of Equality Comparable, and that
+    comparison for equality is possible between objects of type
+    EqualityComparable and objects of InputIterator's value types.</para>
+  </section>
+
+  <section>
+    <title>Preconditions</title>
+
+    <para>Functions usually aren't guaranteed to yield a well-defined result
+    for any possible input, but only for valid input; it is an error to call a
+    function with invalid input. This section describes the conditions for
+    validity.</para>
+  </section>
+
+  <section>
+    <title>Complexity</title>
+
+    <para>Guarantees on the function's run-time complexity. For example,
+    find's run-time complexity is linear in the length of the input
+    range.</para>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para>A code fragment that illustrates how to use the function.</para>
+  </section>
+
+  <section>
+    <title>Notes</title>
+
+    <para>Footnotes (if any) that are referred to by other parts of the
+    page.</para>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para>Links to other related pages.</para>
+  </section>
+</section>
