@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title>make_window</title>
+
+  <section>
+    <title>Prototype</title>
+
+    <para><code>namespace moving_window {</code></para>
+
+    <para><code> square_window make_window(const square_tag&amp;, int
+    radius)</code></para>
+
+    <para><code><para><code> circular_window make_window(const
+    circle_tag&amp;, double radius)</code></para>}</code></para>
+  </section>
+
+  <section>
+    <title>Description</title>
+
+    <para>Creates a window object that can be used in the
+    make_moving_window_view function. Depending on the overload either a
+    circular or a square window is created. For square windows, the radius is
+    the distance from side to the central pixel. </para>
+  </section>
+
+  <section>
+    <title>Definition</title>
+
+    <para>The function is defined in "moving_window/window.h"</para>
+
+    <para>The tags square_tag and circle_tag are defined in
+    "moving_window/traits.h"</para>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para>The following example creates a window object that specifies a
+    circular window with a radius of 5 pixels.</para>
+
+    <para><programlisting>auto win = moving_window::make_window(moving_window::circle_tag(), 5);</programlisting></para>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para>make_moving_window_view</para>
+  </section>
+</section>

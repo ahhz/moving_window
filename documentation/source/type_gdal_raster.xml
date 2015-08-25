@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title><replaceable>gdal_raster&lt;T&gt;</replaceable></title>
+
+  <para>.</para>
+
+  <section>
+    <title>Description</title>
+
+    <para>This is a model of Raster that is associated with a geotiff raster
+    file and is driven by the GDAL library</para>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para>The example below uses gdal_raster to open two rasters</para>
+  </section>
+
+  <section>
+    <title>Definition</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Model of</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Type requirements</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Public base classes</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Members</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>New Members</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Notes</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para/>
+  </section>
+</section>

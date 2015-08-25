@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title><replaceable>zip_range&lt;...&gt;</replaceable></title>
+
+  <para>Makes it possible to simultaneously iterate over a number of
+  ranges</para>
+
+  <section>
+    <title>Description</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Definition</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Model of</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Type requirements</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Public base classes</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Members</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>New Members</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>Notes</title>
+
+    <para/>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para/>
+  </section>
+</section>

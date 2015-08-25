@@ -1,0 +1,436 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Concepts</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
+<link rel="prev" href="s03.html" title="Installation">
+<link rel="next" href="s05.html" title="Types">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="s03.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="s05.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="idm1567684464"></a>Concepts</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s04.html#idm1567683824">MovingWindowView</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567670512">Indicator</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567657328">Raster</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567630960">Window</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1567683824"></a>MovingWindowView</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s04.html#idm1567683184">Summary</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567682032">Refinement of</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567680880">Associated Types</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567679856">Notation</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567678832">Definitions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567677808">Valid Expressions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567676784">Expression Semantics</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567675760">Complexity Guarentees</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567674736">Invariants</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567673712">Models</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567672688">Notes</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567671664">See Also</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567683184"></a>Summary</h4></div></div></div>
+<p>A MovingWindowView object is a Range over all pixels of a raster map
+    that at each pixel yields the Indicator corresponding to a Window
+    surrounding the pixel.</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567682032"></a>Refinement of</h4></div></div></div>
+<p>Range</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567680880"></a>Associated Types</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567679856"></a>Notation</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567678832"></a>Definitions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567677808"></a>Valid Expressions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567676784"></a>Expression Semantics</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567675760"></a>Complexity Guarentees</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567674736"></a>Invariants</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567673712"></a>Models</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567672688"></a>Notes</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567671664"></a>See Also</h4></div></div></div>
+<p></p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1567670512"></a>Indicator</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s04.html#idm1567669872">Summary</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567668720">Refinement of</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567667696">Associated Types</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567666672">Notation</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567665648">Definitions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567664624">Valid Expressions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567663600">Expression Semantics</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567662576">Complexity Guarentees</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567661552">Invariants</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567660528">Models</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567659504">Notes</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567658480">See Also</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567669872"></a>Summary</h4></div></div></div>
+<p>An Indicator class specifies how individual values are aggregated
+    into a summary statistic. </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567668720"></a>Refinement of</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567667696"></a>Associated Types</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567666672"></a>Notation</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567665648"></a>Definitions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567664624"></a>Valid Expressions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567663600"></a>Expression Semantics</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567662576"></a>Complexity Guarentees</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567661552"></a>Invariants</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567660528"></a>Models</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567659504"></a>Notes</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567658480"></a>See Also</h4></div></div></div>
+<p></p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1567657328"></a>Raster</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s04.html#idm1567656688">Summary</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567655152">Refinement of</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567654128">Associated Types</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567652592">Notation</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567651568">Definitions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567650544">Valid Expressions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567637232">Expression Semantics</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567636208">Complexity Guarentees</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567635184">Invariants</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567634160">Models</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567633136">Notes</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567632112">See Also</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567656688"></a>Summary</h4></div></div></div>
+<p>The Moving Window library works with data that conforms to the
+    Raster Concept. Geographical raster layers carry information of the
+    spatial distribution of some variable. The data is stored in a matrix that
+    corresponds to a regular grid and where the each cell, or pixel,
+    corresponds to a square square geograpical area. To convert from matrix
+    indices to geographical coordinates it is necessary to know the
+    orientation of the grid, its corner coordinates and the size of each cell.
+    The moving window library is not concerned with these, because it assumes
+    that all raster layers that are used are identical in orientation, extent
+    and cell size. </p>
+<p>Thus a Raster is not more than a matrix. The operation on Raster
+    that are supported are to query the dimension of the matrix and to access
+    values. Specifically the moving window library needs to iterate over
+    pixels and edges (pairs of adjacent pixels). For this the Raster most have
+    associated views and iterators. </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567655152"></a>Refinement of</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567654128"></a>Associated Types</h4></div></div></div>
+<p>The following types are used as tags to specify different forms of
+    iteration over rasters:</p>
+<p>moving_window::raster_iterator_tag::orientation::row_major;
+    moving_window::raster_iterator_tag::orientation::col_major;
+    moving_window::raster_iterator_tag::element::pixel;
+    moving_window::raster_iterator_tag::element::h_edge;
+    moving_window::raster_iterator_tag::element::h_edge_first_only;
+    moving_window::raster_iterator_tag::element::h_edge_second_only;
+    moving_window::raster_iterator_tag::element::v_edge;
+    moving_window::raster_iterator_tag::element::v_edge_first_only;
+    moving_window::raster_iterator_tag::element::v_edge_second_only;
+    moving_window::raster_iterator_tag::access::read_only;
+    moving_window::raster_iterator_tag::access::read_write; </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567652592"></a>Notation</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567651568"></a>Definitions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567650544"></a>Valid Expressions</h4></div></div></div>
+<div class="table">
+<a name="idm1567649904"></a><p class="title"><b>Table&#160;1.1.&#160;</b></p>
+<div class="table-contents"><table class="table" summary="">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td>Expression</td>
+<td>Effect</td>
+<td>Default (moving_windows/raster_traits.h)</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::value_type&lt;R&gt;::type</td>
+<td>the value type of raster elements</td>
+<td>R::value_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::coordinate_type&lt;R&gt;::type</td>
+<td>the type used to give raster coordinate pairs, must conform
+            to the Coordinate concept (not documented)</td>
+<td>R::coordinate_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::index_type&lt;R&gt;::type</td>
+<td>the type used give individual raster coordinates, must be
+            some integer type</td>
+<td>R::index_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::iterator&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;::type</td>
+<td>erator type for the raster for the raster. The tags must be
+            chosen from the following list given above.</td>
+<td>There is no default type for the pixel iterators, but the
+            edge iterators are by default derived from the pixel iterators (in
+            moving_window/edge_iterator.h).</td>
+</tr>
+<tr>
+<td>moving_windows::raster_operations::begin&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;(r)</td>
+<td>return the iterator characterized by the Tags at the begin
+            of he raster.</td>
+<td>r.begin&lt;iterator&lt;ElementTag, OrientationTag,
+            AccessTag, R&gt;::type&gt;();</td>
+</tr>
+<tr>
+<td>moving_windows::raster_operations::end&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;(r)</td>
+<td>return the iterator characterized by the Tags at the end of
+            he raster.</td>
+<td>r.end&lt;iterator&lt;ElementTag, OrientationTag, AccessTag,
+            R&gt;::type&gt;();</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567637232"></a>Expression Semantics</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567636208"></a>Complexity Guarentees</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567635184"></a>Invariants</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567634160"></a>Models</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567633136"></a>Notes</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567632112"></a>See Also</h4></div></div></div>
+<p></p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1567630960"></a>Window</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s04.html#idm1567630320">Summary</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567629168">Refinement of</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567628144">Associated Types</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567627120">Notation</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567626096">Definitions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567625072">Valid Expressions</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567624048">Expression Semantics</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567623024">Complexity Guarentees</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567622000">Invariants</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567620976">Models</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567619952">Notes</a></span></dt>
+<dt><span class="section"><a href="s04.html#idm1567618928">See Also</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567630320"></a>Summary</h4></div></div></div>
+<p>A Window object specifies which surrounding pixels are involved in
+    the computation of an Indicator centred on a pixel.</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567629168"></a>Refinement of</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567628144"></a>Associated Types</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567627120"></a>Notation</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567626096"></a>Definitions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567625072"></a>Valid Expressions</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567624048"></a>Expression Semantics</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567623024"></a>Complexity Guarentees</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567622000"></a>Invariants</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567620976"></a>Models</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567619952"></a>Notes</h4></div></div></div>
+<p></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1567618928"></a>See Also</h4></div></div></div>
+<p></p>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="s03.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="s05.html"><img src="../images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
