@@ -1,2 +1,2 @@
-For the documentation, follow this link: 
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/ahhz/moving_window/master/documentation/html/index.html
+For the documentation, follow this link:  <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/ahhz/moving_window/master/documentation/html/index.html" target="_blank">this link</a> 
+
