@@ -1,5 +1,5 @@
-xsltproc --nonet --xinclude C:\Users\ah0038\Development\third_party\boost_1_57_0/tools/boostbook/xsl/docbook.xsl source/moving_window.xml > temp.xml
-xsltproc --nonet --xinclude C:\Users\ah0038\Development\third_party\boost_1_57_0/tools/boostbook/xsl/html.xsl boostbook/db2html.xsl temp.xml
+xsltproc --nonet --xinclude %BOOST%/tools/boostbook/xsl/docbook.xsl source/moving_window.xml > temp.xml
+xsltproc --nonet --xinclude %BOOST%/tools/boostbook/xsl/html.xsl boostbook/db2html.xsl temp.xml
 md html
 copy index.html html\index.html
 copy HTML.manifest html\HTML.manifest
