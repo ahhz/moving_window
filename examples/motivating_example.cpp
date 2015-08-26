@@ -1,14 +1,14 @@
-#include <moving_window/indicator/edge_density.h>;
-#include <moving_window/moving_window_view.h>;
-#include <moving_window/utility.h>;
-#include <moving_window/window.h>;
-#include <moving_window/zip_range.h>;
-#include <functional>;
-#include <tuple>;
+#include <moving_window/indicator/edge_density.h>
+#include <moving_window/moving_window_view.h>
+#include <moving_window/utility.h>
+#include <moving_window/window.h>
+#include <moving_window/zip_range.h>
+#include <functional>
+#include <tuple>
 
 int main()
 {
-  double radius = 40;
+  double radius = 10;
 
   // open a raster data set
   auto input = open_gdal_raster<int>("input.tif", GA_ReadOnly);
@@ -20,7 +20,7 @@ int main()
   auto window = make_square_window(radius);
 
   // Create a range over the windowed indicator for all pixels
-  auto window_view = make_moving_window_view(edge_density_tag(), window, &amp;input);
+  auto window_view = make_moving_window_view(edge_density_tag(), window, &input);
 
   // Create a range to simultaneously iterate over output and window_view
   auto zip = make_zip_range(std::ref(output), std::ref(window_view));

@@ -11,6 +11,7 @@
 #define INDICATOR_EDGE_DENSITY_H_AHZ
 
 #include <moving_window/traits.h>
+#include <moving_window/default_construction_functor.h>
 #include <boost/optional.hpp>
 #include <utility>
 

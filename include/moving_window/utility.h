@@ -10,8 +10,10 @@
 
 #include <gdal.h>
 #include <gdal_priv.h>
+
 #include <boost/filesystem.hpp>
 
+#include <iostream>
 //! \brief the namespace containing the moving window library
 namespace moving_window {
 
