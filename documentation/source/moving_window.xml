@@ -30,7 +30,11 @@
     indicators. At the moment the documentation is limited to the use of
     built-in indicators, please contact the author if you are trying to
     develop your own.</para>
-    <para><emphasis>Note:</emphasis> This is not a Boost library or intended to become one, I am just trying to use the tools recommended on the <ulink url="http://http://rrsd.com/blincubator.com/">Boost Library Incubator</ulink>.</para>
+
+    <para><emphasis>Note:</emphasis> This is not a Boost library or intended
+    to become one, I am just trying to use the tools recommended on the <ulink
+    url="http://http://rrsd.com/blincubator.com/">Boost Library
+    Incubator</ulink>.</para>
   </section>
 
   <section>
@@ -40,13 +44,15 @@
     edge-density indicator:</para>
 
     <programlisting>
-#include &lt;moving_window/indicator/edge_density.h&gt;;
-#include &lt;moving_window/moving_window_view.h&gt;;
-#include &lt;moving_window/utility.h&gt;;
-#include &lt;moving_window/window.h&gt;;
-#include &lt;moving_window/zip_range.h&gt;;
-#include &lt;functional&gt;;
-#include &lt;tuple&gt;;
+#include &lt;moving_window/indicator/edge_density.h&gt;
+#include &lt;moving_window/moving_window_view.h&gt;
+#include &lt;moving_window/utility.h&gt;
+#include &lt;moving_window/window.h&gt;
+#include &lt;moving_window/zip_range.h&gt;
+#include &lt;functional&gt;
+#include &lt;tuple&gt;
+
+using namespace moving_window;
 
 int main()
 {
