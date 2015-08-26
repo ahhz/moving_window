@@ -1,10 +1,24 @@
+//
+//=======================================================================
+// Copyright 2015
+// Author: Alex Hagen-Zanker
+// University of Surrey
+//
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
+//=======================================================================
+//
+// Contains the motivating example for the Moving Window library 
+
 #include <moving_window/indicator/edge_density.h>
 #include <moving_window/moving_window_view.h>
 #include <moving_window/utility.h>
 #include <moving_window/window.h>
 #include <moving_window/zip_range.h>
+
 #include <functional>
 #include <tuple>
+
+using namespace moving_window;
 
 int main()
 {
@@ -16,7 +30,7 @@ int main()
   // create a raster data set, with same dimensions as input
   auto output = create_gdal_raster_from_model<double>("output.tif", input);
 
-  // specify and create the window to use
+  // create the window to use
   auto window = make_square_window(radius);
 
   // Create a range over the windowed indicator for all pixels
@@ -31,5 +45,6 @@ int main()
     auto& window_i = std::get<1>(i);
     output_i = window_i.extract().get();
   }
+
   return 0;
 }

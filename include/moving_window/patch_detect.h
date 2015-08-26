@@ -1,6 +1,6 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
@@ -9,7 +9,12 @@
 //
 // This file contains the functions for delineating patches in the dataset. 
 // For very large datasets this can cause trouble as the algorihm creates a 
-// std::deque of pixels to process that can turn very large.
+// std::deque of pixel values that can turn very large.
+// Before using a std::deque (FIFO) we used a std::stack (LIFO) this keeps the 
+// stack/deque smaller and saves the day for the large CORINE dataset
+//
+// TODO: it remains a bottleneck and possibly replace for a file based stack 
+// from STXXL
 
 #ifndef PATCH_DETECT_H_AHZ
 #define PATCH_DETECT_H_AHZ
@@ -52,9 +57,6 @@ namespace moving_window {
 
     index_type patch_index = 0;
 
-    // Using deque (FIFO) instead of stack (LIFO) keeps the stack/deque smaller
-    // and saves the day for the CORINE dataset
-    // TODO: it remains a bottleneck and possibly replace for stack from STXXL
     std::deque<coordinate> pixel_stack;
 
     static const coordinate N(-1, 0);

@@ -1,6 +1,6 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
@@ -18,14 +18,13 @@
 
 namespace moving_window {
 
-  // Namespaces instead of struct to allow new tags to be defined elsewere.
   namespace raster_iterator_tag
   {
     namespace orientation
     {
       struct row_major{};
       struct col_major{};
-    };
+    }
 
     namespace element
     {
@@ -36,23 +35,13 @@ namespace moving_window {
       struct v_edge{};
       struct v_edge_first_only{}; //first is left
       struct v_edge_second_only{};
-    };
+    }
 
     namespace access
     {
       struct read_only{};
       struct read_write{};
-    };
-  };
-
-  // This needs to be specialized
-  /*template <typename OrientationTag, typename ElementTag, typename AccessTag, typename RasterType>
-  struct raster_iterator_selector
-  {
-  struct needs_specialization{};
-  typedef needs_specialization type;
-  };
-  */
-
-} // namespace moving_window 
+    }
+  }
+} 
 #endif

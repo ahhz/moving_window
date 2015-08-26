@@ -2,7 +2,6 @@
 //=======================================================================
 //
 // Contains the utility functions for reading and creating gdal_raster 
-// TODO roll out the moving_window namespace to all files
 // TODO rename this file to something more specific
 
 #ifndef UTILITY_H_AHZ
@@ -10,24 +9,16 @@
 
 #include <gdal.h>
 #include <gdal_priv.h>
-
 #include <boost/filesystem.hpp>
-
 #include <iostream>
-//! \brief the namespace containing the moving window library
+
 namespace moving_window {
 
-  //! \brief Type trait for the GDALData type associated with T
-  //! Overloads for int, unsigned int, short, unsigned short,unsigned char
-  //! float and double are provided. 
-  //! \tparam T needs to be overloaded by the user.
   template<typename T> struct native_gdal_data_type
   {
     static const GDALDataType type = GDT_Unknown;
   };
 
-  // \cond 
-  // exclude from doxygen
   template<> struct native_gdal_data_type<int>
   {
     static const GDALDataType type = GDT_Int32;
@@ -66,7 +57,6 @@ namespace moving_window {
   {
     static const GDALDataType type = GDT_Float64;
   };
-  // \endcond
 
  namespace detail {
 
@@ -122,10 +112,6 @@ namespace moving_window {
     }
   }
   
-  //! \brief open a raster file from disk.
-  //! \param path the location of the file.
-  //! \param access the type of access required, either GAReadOnly or GAUpdate
-  //! \param band the raster band that will be accessed 
   template<typename T>
   gdal_raster<T> open_gdal_raster(const boost::filesystem::path& path
     , GDALAccess access, int band = 1)
@@ -133,14 +119,6 @@ namespace moving_window {
     return gdal_raster<T>(path, access, band);
   }
 
-  //! \brief create a gdal_raster file on disk using standard setting 
-  //! that make it efficient for use in moving window library.
-  //! \tparam the type for pixel elements
-  //! \param path the location for the file
-  //! \param rows the row dimension of the file
-  //! \param cols the column dimension of the file
-  //! \param datatype the GDALDataType used for storage. By default it is
-  //! derived from T
   template<typename T>
   gdal_raster<T> create_gdal_raster(const boost::filesystem::path& path
     , int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type)
@@ -157,11 +135,6 @@ namespace moving_window {
     return raster;
   }
 
-  //! \brief create a gdal_raster using dimensions and projection information from another
-  //! \tparam the type for pixel elements.
-  //! \param path the location for the file
-  //! \param model the dimensions and projection information of this gdal_raster will be copied
-  //! \param datatype the GDALDataType used for storage. By default it is derived from T
   template<typename T, typename U>
   gdal_raster<T> create_gdal_raster_from_model(
     const boost::filesystem::path& path, const gdal_raster<U>& model, GDALDataType datatype = native_gdal_data_type<T>::type)
@@ -177,12 +150,6 @@ namespace moving_window {
     return raster;
   }
 
-  //! \brief create a temporary gdal_raster
-  //! The data file will be deleted as the gdal_raster is destructed.
-  //! \tparam the type for pixel elements
-  //! \param rows the row dimension of the file
-  //! \param cols the column dimension of the file
-  //! \param datatype the GDALDataType used for storage. By default it is derived from T
   template<typename T>
   gdal_raster<T> create_temp_gdal_raster(int rows, int cols, GDALDataType datatype = native_gdal_data_type<T>::type)
   {
@@ -192,11 +159,6 @@ namespace moving_window {
     return raster;
   }
 
-  //! \brief create a temporary gdal_raster using dimensions and projection information from another
-  //! The data file will be deleted as the gdal_raster is destructed.
-  //! \tparam the type for pixel elements
-  //! \param model the dimensions and projection information of this gdal_raster will be copied
-  //! \param datatype the GDALDataType used for storage. By default it is derived from T
   template<typename T, typename U>
   gdal_raster<T> create_temp_gdal_raster_from_model(const gdal_raster<U>& model, GDALDataType datatype = native_gdal_data_type<T>::type)
   {
@@ -205,6 +167,5 @@ namespace moving_window {
     raster.set_delete_on_close(true);
     return raster;
   }
-}
-using namespace moving_window;
+} // namespace moving_window;
 #endif

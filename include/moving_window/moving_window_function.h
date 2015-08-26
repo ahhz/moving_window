@@ -1,12 +1,13 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
 // Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
-// this file is intended to support the python wrapper, but not finished at all...
+// this file is intended to support the python wrapper, but not finished at 
+// all...
 
 #ifndef MOVING_WINDOW_FUNCTION_H_AHZ
 #define MOVING_WINDOW_FUNCTION_H_AHZ

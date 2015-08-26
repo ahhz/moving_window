@@ -1,8 +1,22 @@
-#pragma once
+//
+//=======================================================================
+// Copyright 2015
+// Author: Alex Hagen-Zanker
+// University of Surrey
+//
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
+//=======================================================================
+//
+// Implements a zip range, it is not a fully functional generic zip range, 
+// but supports the forward-only iteration necessary in the project
+
+#ifndef ZIP_RANGE_H_AHZ
+#define ZIP_RANGE_H_AHZ
+
 #include <functional>
 #include <tuple>
 #include <utility>
-#include <vector>
+//#include <vector>
 
 namespace moving_window {
 
@@ -157,6 +171,9 @@ namespace moving_window {
 
 
   //Iterate over a range of ranges
+  // TODO: this is not being used at teh moment, but should come in handy for 
+  // distance weighted moving windows.
+  /* 
   template<typename RangeRange>
   struct range_range_iterator
   {
@@ -283,4 +300,8 @@ namespace moving_window {
     return range_zip_range<RangeRange>(rr);
   }
 
+  */
+
 } //namespace moving_window 
+
+#endif

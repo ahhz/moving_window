@@ -1,7 +1,6 @@
-
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
@@ -20,6 +19,21 @@
 // keep in mind that these are not the concepts of the standard, because the 
 // dereference does not return a reference to the elements, but a proxy
 //
+// gdal_iterator<Raster> and gdal_trans_iterator are random access iterators for 
+// Raster 
+// gdal_iterator visits all cells row-by-row and each row col-by-col
+// gdal_trans_iterator visits all cells col-by-col and each col row-by-row
+// The iterators implement the RandomAccessIterator concept, except that 
+// dereferencing the iterator yields a dereference_proxy instead of a reference
+// to the element.
+// The proxy that can be used in much the same way: 
+// like this:         *iter = value; 
+// or like this:      value_type value = *iter;
+// but not like this: value_type& value  = *iter
+//
+// Raster must implement the BlockedRaster concept, of which gdal_raster<T> is 
+// the prime model.
+//
 // TODO: the way in which const_iterators are defined is maybe not up to snuff
 
 #ifndef GDAL_RASTER_ITERATOR_H_AHZ
@@ -35,15 +49,6 @@
 #include <type_traits>
 
 namespace moving_window {
-
-  //! \brief A random access iterator for gdal_raster
-  //! This iterator visits all cells row-by-row and each row col-by-col
-  //! The iterator implement the RandomAccessIterator concept. However, 
-  //! dereferencing the iterator does not yield a reference to the pixel element, 
-  //! but a proxy that can be used in much the same way: 
-  //!  *iter = value 
-  //!  , or: value_type value = *iter 
-  //!  , but not: value_type& value  = *iter
 
   template<typename Raster>
   class gdal_iterator
@@ -230,15 +235,6 @@ namespace moving_window {
     Raster* m_raster;
   };
 
-
-  //! \brief A random access iterator for gdal_raster
-  //! This iterator visits all cells col-by-col and each col row-by-row
-  //! The iterator implement the RandomAccessIterator concept, except that 
-  //! dereferencing the iterator yields a dereference_proxy instead of a reference
-  //! to the element.
-  //! The iterator implements the PutGetIterator concept
-  //! The iterator implements the FindingIteratorConcept 
-  //! \tparam Raster must implement the BlockedRaster concept
   template<typename Raster>
   class gdal_trans_iterator
     : public boost::iterator_facade<
