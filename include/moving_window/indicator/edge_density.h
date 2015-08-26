@@ -4,13 +4,14 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 
 #ifndef INDICATOR_EDGE_DENSITY_H_AHZ
 #define INDICATOR_EDGE_DENSITY_H_AHZ
 
 #include <moving_window/traits.h>
+#include <moving_window/default_construction_functor.h>
 #include <boost/optional.hpp>
 #include <utility>
 

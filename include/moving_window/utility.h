@@ -1,4 +1,4 @@
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // Contains the utility functions for reading and creating gdal_raster 
@@ -10,8 +10,10 @@
 
 #include <gdal.h>
 #include <gdal_priv.h>
+
 #include <boost/filesystem.hpp>
 
+#include <iostream>
 //! \brief the namespace containing the moving window library
 namespace moving_window {
 

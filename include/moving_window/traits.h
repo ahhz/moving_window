@@ -1,4 +1,4 @@
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // traits are used to inspect properties of moving window based indicators
