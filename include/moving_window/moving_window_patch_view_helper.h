@@ -1,6 +1,6 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
@@ -11,7 +11,7 @@
 // the moving_window_view for patches. Moreover it provide a general
 // initialization function for patch based indicators. 
 //
-// TODO: This class is overlycomplicated and needs a good rethink and cleanup.
+// TODO: This class is overly complicated and needs a good rethink and cleanup.
 
 #ifndef MOVING_WINDOW_PATCH_VIEW_HELPER_H_AHZ
 #define MOVING_WINDOW_PATCH_VIEW_HELPER_H_AHZ

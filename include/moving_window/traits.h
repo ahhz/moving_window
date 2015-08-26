@@ -17,9 +17,7 @@ namespace moving_window {
 
   struct circle_tag{};
   struct square_tag{};
-
-
-
+  
   template<typename Tag>
   struct indicator_traits
   {

@@ -1,6 +1,6 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
@@ -9,7 +9,7 @@
 //
 // The moving_window_edge_iterator provides a generalized interface for both
 // non-square moving window iterators of edge based indicators
-// TODO: disallow copying?
+// TODO: should we disallow copying?
 
 #ifndef NON_SQUARE_WINDOW_EDGE_ITERATOR_H_AHZ
 #define NON_SQUARE_WINDOW_EDGE_ITERATOR_H_AHZ

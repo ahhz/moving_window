@@ -1,16 +1,15 @@
 
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
 // Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
-// Depending on the weighted/unweighted characteristic of the indicator
-// , we need to iterate over one or two maps for moving window creation. 
-// The indicator_input_raster class can either have a weight or not
-// TODO: The name of this file is no longer appropriate
+// Depending on the weighted/unweighted characteristic of the indicator, we 
+// need to iterate over one or two maps for moving window creation. The 
+// indicator_input_raster class can either have a weight or not.
 //
 
 #ifndef INDICATOR_INPUT_RASTER_H_AHZ
@@ -175,9 +174,6 @@ namespace moving_window {
     typedef typename std::conditional<std::is_same<WeightRaster, int>::value,
       sample_iterator, zip_iterator>::type input_iterator;
   };
-
-
-
 
   // An iterator that goes over the input raster(s) and can be added / subtracted
   // to and from indicators. 

@@ -1,15 +1,15 @@
 //
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
 // Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
-// Neighourhood, defines the shape of a kernel as a square vector-matrix of bools
-// It is an ugly solution and no most efficient with memory and computation
-// , but OK for now
+// Neighourhood, defines the shape of a kernel as a square vector-matrix of 
+// bools. It is an ugly solution and no most efficient with memory and 
+// computation, but OK for now
 
 #ifndef NEIGHBOURHOOD_H_AHZ
 #define NEIGHBOURHOOD_H_AHZ

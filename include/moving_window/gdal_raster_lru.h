@@ -1,13 +1,22 @@
 ﻿//
 //=======================================================================
-// Copyright 2013-2015
+// Copyright 2015
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
 // Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
+// This file provides a Least Recent Used cache of data blocks for gdal_datasets 
+// When additional memory is required, beyond the memory budget, then the block
+// in the matrix that is *least recently used* will be cleared.
 
+// This is providing functionality that is also present in GDAL. It should be 
+// investigated why GDAL appeared too slow. 
+//
+// By using this LRU space, only the most basic interface in GDAL (ReadBlock 
+// and WriteBlock) needs to be used. And not the friendlier and GDAL-recommended
+// RasterIO. 
 
 #ifndef GDAL_RASTER_LRU_H_AHZ
 #define GDAL_RASTER_LRU_H_AHZ
@@ -29,15 +38,7 @@
 
 namespace moving_window {
 
-  //! \brief Least Recent Used cache of data blocks for gdal_datasets 
-  //! When additional memory is required, beyond the memory budget, then the block
-  //! in the matrix that is *least recent used* will be cleared.
 
-  //! This is providing functionality that is also present in GDAL. It should be 
-  //! investigated why GDAL appeared too slow. 
-  //! By using this LRU space, only the most basic interface in GDAL (ReadBlock 
-  //! and WriteBlock) needs to be used .And not the friendlier and 'officially 
-  //! preferred' RasterIO 
 
   namespace LRU
   {
