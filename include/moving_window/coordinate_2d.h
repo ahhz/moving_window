@@ -4,7 +4,7 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // The class coordinate_2d is used to provide 2d coordinates as an index to 

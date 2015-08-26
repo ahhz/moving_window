@@ -4,7 +4,7 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // The moving_window_patch_view_helper provides the typedefs particular for 

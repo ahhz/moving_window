@@ -4,7 +4,7 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // This class is used as a default for functions that allow specifying a 

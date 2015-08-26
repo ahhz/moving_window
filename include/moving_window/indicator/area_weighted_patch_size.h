@@ -4,7 +4,7 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 
 #ifndef INDICATOR_AREA_WEIGHTED_PATCH_SIZE_H_AHZ

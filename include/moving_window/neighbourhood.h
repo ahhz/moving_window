@@ -4,7 +4,7 @@
 // Author: Alex Hagen-Zanker
 // University of Surrey
 //
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // Neighourhood, defines the shape of a kernel as a square vector-matrix of bools

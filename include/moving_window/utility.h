@@ -1,4 +1,4 @@
-// Not for public distribution
+// Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
 // Contains the utility functions for reading and creating gdal_raster 
