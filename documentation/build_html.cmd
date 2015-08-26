@@ -5,6 +5,7 @@ copy index.html html\index.html
 copy HTML.manifest html\HTML.manifest
 copy boostbook\boostbook.css html\boostbook.css
 copy boostbook\pre-boost.jpg html\pre-boost.jpg
+xcopy boostbook\images\ html\images\ /E /Y
 xcopy index html\index\ /E /Y
 xcopy images html\images\ /E /Y
 del index.html
