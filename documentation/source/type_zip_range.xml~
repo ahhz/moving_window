@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+  <title><replaceable>zip_iterator</replaceable></title>
+
+  <para>zip_iterator&lt;typename ...Iters&gt;</para>
+
+  <section>
+    <title>Description</title>
+
+    <para>A zip_iters is used to iterate over a number of ranges in step. This
+    is not a full-fledged implementation and only allows for forward
+    iteration, which is sufficient for the moving_window library.</para>
+  </section>
+
+  <section>
+    <title>Example of use</title>
+
+    <para>The following iterates over two std::vectors.</para>
+
+    <programlisting>std::vector&lt;int&gt; a = {1,2,3,4,5};
+std::vector&lt;int&gt; b = {100, 200, 300, 400, 500};
+using iter = std::vector&lt;int&gt;::iterator;
+using zip = zip_iterator&lt;iter, iter&gt;;
+
+zip begin(a.begin(), b.begin());
+zip end(a.end(), b.end());
+for(zip i = begin; i != end; ++i)
+{
+  std::cout &lt;&lt; std::get&lt;0&gt;(*i) + std::get&lt;1&gt;(*i) &lt;&lt; std::endl;
+}</programlisting>
+
+    <para>Output:</para>
+
+    <programlisting>
+101
+202
+303
+404
+505</programlisting>
+  </section>
+</section>

@@ -8,72 +8,28 @@
     <title>Summary</title>
 
     <para>An Indicator class specifies how individual values are aggregated
-    into a summary statistic. </para>
-  </section>
-
-  <section>
-    <title>Refinement of</title>
-
-    <para/>
-  </section>
-
-  <section>
-    <title>Associated Types</title>
-
-    <para/>
-  </section>
-
-  <section>
-    <title>Notation</title>
-
-    <para/>
-  </section>
-
-  <section>
-    <title>Definitions</title>
-
-    <para/>
+    into a summary statistic. I</para>
   </section>
 
   <section>
     <title>Valid Expressions</title>
 
-    <para/>
-  </section>
+    <para>i.add_sample(e)</para>
 
-  <section>
-    <title>Expression Semantics</title>
+    <para>i.add_sample(e, w)</para>
 
-    <para/>
-  </section>
+    <para>i.subtract_sample(e)</para>
 
-  <section>
-    <title>Complexity Guarentees</title>
+    <para>i.subtract_sample(e,w)</para>
 
-    <para/>
-  </section>
+    <para>i.extract()</para>
 
-  <section>
-    <title>Invariants</title>
+    <para>i.add_subtotal(j)</para>
 
-    <para/>
-  </section>
+    <para>i.add_subtotal(j,w)</para>
 
-  <section>
-    <title>Models</title>
+    <para>i.subtract_subtotal(j)</para>
 
-    <para/>
-  </section>
-
-  <section>
-    <title>Notes</title>
-
-    <para/>
-  </section>
-
-  <section>
-    <title>See Also</title>
-
-    <para/>
+    <para>i.subtract_subtotal(j,w)</para>
   </section>
 </section>
