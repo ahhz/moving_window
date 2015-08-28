@@ -116,8 +116,8 @@ namespace moving_window {
       other.m_cache = NULL;
     }
 
-    //! Move assignment 
-    //!
+    // Move assignment 
+    //
     gdal_raster& operator=(gdal_raster<T>&& other)
     {
       close_dataset();

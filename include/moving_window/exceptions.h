@@ -7,9 +7,8 @@
 // Distributed under the MIT Licence (http://opensource.org/licenses/MIT)
 //=======================================================================
 //
-// The class coordinate_2d is used to provide 2d coordinates as an index to 
-// rasters. 
-// It could possibly be taken from an external source, e.g. BOOST
+// Defines exception to be thrown by the moving_window library.
+//
 
 #ifndef MOVING_WINDOW_EXCEPTIONS_H_AHZ
 #define MOVING_WINDOW_EXCEPTIONS_H_AHZ
