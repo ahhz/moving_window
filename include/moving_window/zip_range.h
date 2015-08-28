@@ -16,14 +16,18 @@
 #include <functional>
 #include <tuple>
 #include <utility>
-//#include <vector>
 
 namespace moving_window {
-
+  template<typename ...Ts> struct pack{};
   template<typename T> struct unwrap { typedef T type; };
   template<typename T> struct unwrap<std::reference_wrapper<T>> { typedef T& type; };
   template<typename T> struct unwrap_unref { typedef T type; }; 
   template<typename T> struct unwrap_unref<std::reference_wrapper<T> > { typedef T type; };
+ 
+  template<typename T> struct full_decay
+  {
+    typedef typename std::decay<typename unwrap<T>::type>::type type;
+  };
 
   template<int ...> struct seq { };
 
@@ -35,16 +39,29 @@ namespace moving_window {
   template<typename...Args> void ignore(Args...)
   {}
 
-  template < typename...Iterators >
+  template < typename... Iterators >
   class zip_iterator
   {
+    typedef std::tuple<typename unwrap<Iterators>::type...> unwrapped_iterators;
+    typedef std::tuple<typename unwrap_unref<Iterators>::type...> unreffed_iterators;
+
   public:
-    zip_iterator(Iterators&&...its) : iterators(std::forward<Iterators>(its)...)
+    zip_iterator(const zip_iterator& it) : iterators(it.iterators)
     { }
 
+    template<typename... InIterators>
+    explicit zip_iterator(InIterators&&...its) : iterators(std::forward<InIterators>(its)...)
+    { }
+
+    zip_iterator& operator=(const zip_iterator& it)
+    {
+      iterators = it.iterators;
+      return *this;
+    }
+
+ private:
     typedef typename gens<sizeof...(Iterators)>::type tuple_indices;
 
-  private:
     // Workaround for the Visual Studio bug
     // http://stackoverflow.com/questions/23347287/parameter-pack-expansion-fails
     template<typename T>
@@ -53,9 +70,8 @@ namespace moving_window {
       typedef typename T::reference reference;
     };
 
-  public:
-    //typedef std::tuple<typename Iterators::reference...> references;
-    typedef std::tuple<typename get_reference<Iterators>::reference...> references;
+     //typedef std::tuple<typename Iterators::reference...> references;
+    typedef std::tuple<typename get_reference<typename unwrap_unref<Iterators>::type>::reference...> references;
 
     template<typename T>
     empty inc(T& t)
@@ -76,88 +92,114 @@ namespace moving_window {
       return references(single_deref(std::get<S>(iterators))...);
     }
 
-    references operator*()
-    {
-      return multi_deref(tuple_indices());
-    }
-
+ 
     template<int ...S>
     void multi_inc(seq<S...>)
     {
       ignore(inc(std::get<S>(iterators))...);
     }
 
+  public:
     zip_iterator& operator++()
     {
       multi_inc(tuple_indices());
       return *this;
     }
 
-    bool operator==(const zip_iterator& that) const
+    template < typename... OtherIterators > //OtherIterators can be different in type of references, etc
+    bool operator==(const zip_iterator<OtherIterators...>& that) const
     {
-      return std::get<0>(iterators) == std::get<0>(that.iterators);
+      static_assert(std::is_same
+        < pack<typename full_decay<OtherIterators>::type...>
+        , pack<typename full_decay<Iterators>::type... > >::value, "incompatible iterators");
+
+      return std::get<0>(iterators) == that.get_iterator<0>();
     }
 
-    bool operator!=(const zip_iterator& that) const
+    template < typename... OtherIterators > //OtherIterators can be different in type of references, etc
+    bool operator!=(const zip_iterator<OtherIterators...>& that) const
     {
-      return std::get<0>(iterators) != std::get<0>(that.iterators);
+      static_assert(std::is_same
+        < pack<typename full_decay<OtherIterators>::type...>
+        , pack<typename full_decay<Iterators>::type... > >::value, "incompatible iterators");
+
+      return std::get<0>(iterators) != that.get_iterator<0>();
     }
 
-    std::tuple<Iterators...> iterators;
+    references operator*()
+    {
+      return multi_deref(tuple_indices());
+    }
+
+    template<std::size_t I>
+    typename std::tuple_element<I, unwrapped_iterators>::type& get_iterator()
+    {
+      return std::get<I>(iterators);
+    }
+    template<std::size_t I>
+    const typename std::tuple_element<I, unwrapped_iterators>::type& get_iterator() const
+    {
+      return std::get<I>(iterators);
+    }
+
+  private:
+   unwrapped_iterators iterators;
 
   };
 
   template<typename...Iterators>
-  zip_iterator<Iterators...> make_zip_iterator(Iterators ...its)
+  zip_iterator<typename std::remove_reference<Iterators>::type...> make_zip_iterator(Iterators&&... its)
   {
-    return zip_iterator<Iterators...>(its...);
+    //return zip_iterator<typename std::remove_reference<Iterators>::type...>(announce_pack(), std::forward<Iterators>(its)...);
+    return zip_iterator<typename std::remove_reference<Iterators>::type...>(std::forward<Iterators>(its)...);
   }
-
+    
   template<typename...Ranges>
   struct zip_range
   {
-
-    typedef std::tuple<typename unwrap<Ranges>::type...> unwrapped_ranges;
+  public:
     typedef zip_iterator<typename unwrap_unref<Ranges>::type::iterator...> iterator;
+
+  private:
+    typedef std::tuple<typename unwrap<Ranges>::type...> unwrapped_ranges;
     typedef typename gens<sizeof...(Ranges)>::type tuple_indices;
 
+  public:
+
     template<typename... InRanges>
-    zip_range(InRanges&&... rgs) : ranges(std::forward<InRanges>(rgs)...)
-    {
-
-    }
-    template<typename T>
-    typename T::iterator single_begin(T& t)
-    {
-      return t.begin();
-    }
-
-    template<int ...S>
-    iterator multi_begin(seq<S...>)
-    {
-      return iterator(single_begin(std::get<S>(ranges))...);
-    }
+    explicit zip_range(InRanges&&... rgs) : ranges(std::forward<InRanges>(rgs)...)
+    { }
 
     iterator begin()
     {
       return multi_begin(tuple_indices());
     }
 
-    template<typename T>
-    typename T::iterator single_end(T& t)
+    iterator end()
+    {
+      return multi_end(tuple_indices());
+    }
+
+
+  private:
+    template<typename T> typename T::iterator single_begin(T& t)
+    {
+      return t.begin();
+    }
+
+    template<typename T> typename T::iterator single_end(T& t)
     {
       return t.end();
     }
 
-    template<int ...S>
-    iterator multi_end(seq<S...>)
+    template<int ...S> iterator multi_begin(seq<S...>)
     {
-      return iterator(single_end(std::get<S>(ranges))...);
+      return iterator(single_begin(std::get<S>(ranges))...);
     }
 
-    iterator end()
+    template<int ...S> iterator multi_end(seq<S...>)
     {
-      return multi_end(tuple_indices());
+      return iterator(single_end(std::get<S>(ranges))...);
     }
 
     unwrapped_ranges ranges;
