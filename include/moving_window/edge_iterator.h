@@ -230,8 +230,7 @@ namespace moving_window {
       coordinate_type c = index_to_coordinate(i);
       find(c);
     }
-
-
+    
     // necessary for iterator_facade
     bool equal(const this_type_non_const& other) const
     {

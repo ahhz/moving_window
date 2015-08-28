@@ -2,7 +2,7 @@
 <!DOCTYPE section PUBLIC "-//XMLmind//DTD BoostBook//EN"
 "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
 <section>
-  <title><replaceable>gdal_raster</replaceable></title>
+  <title><replaceable>gdal_raster&lt;T&gt;</replaceable></title>
 
   <section>
     <title>Description</title>
@@ -44,8 +44,8 @@ double mean = static_cast&lt;double&gt;(sum) / count;</programlisting>
   <section>
     <title>Type requirements</title>
 
-    <para><code>T</code> must be POD. It has not been tested for anything but
-    : int, unsigned char, float, double.</para>
+    <para>T must be POD. It has not been tested for anything but : int,
+    unsigned char, float, double.</para>
   </section>
 
   <section>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<section>
+  <title>Introduction</title>
+
+  <para>Moving window analysis is commonly seen as a useful means of achieving
+  scale-sensitive geographical analysis. The implementation of efficient
+  moving window analysis on raster layers is not trivial however and
+  computational difficulties may be a hurdle to appling moving windows in
+  practice. The Moving Window library aims to alleviate such hurdles by
+  offering concepts, functions and classess for <emphasis>generic moving
+  window analysis on raster date</emphasis>. With a relatively small effort,
+  users should be able to apply moving window analysis for a number of
+  built-in indicators or develop and apply custom moving window indicators. At
+  the moment the library is proof-of-concept and the documentation is limited
+  to the use of built-in indicators. Please contact me
+  (a.hagen-zanker@surrey.ac.uk) if you are interested in using this for your
+  work or research.</para>
+</section>

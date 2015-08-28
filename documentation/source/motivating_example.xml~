@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE library PUBLIC "-//XMLmind//DTD BoostBook V1.1//EN"
+"http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<section>
+    <title>Motivating Example</title>
+
+    <para>The following is an example of a program making use of the built-in
+    edge-density indicator:</para>
+
+    <code>
+#include &lt;moving_window/indicator/edge_density.h&gt;
+#include &lt;moving_window/moving_window_view.h&gt;
+#include &lt;moving_window/utility.h&gt;
+#include &lt;moving_window/window.h&gt;
+#include &lt;moving_window/zip_range.h&gt;
+#include &lt;functional&gt;
+#include &lt;tuple&gt;
+
+using namespace moving_window;
+
+int main()
+{
+  double radius = 40;
+
+  // open a raster data set
+  auto input = open_gdal_raster&lt;int&gt;("input.tif", GA_ReadOnly);
+
+  // create a raster data set, with same dimensions as input
+  auto output = create_gdal_raster_from_model&lt;double&gt;("output.tif", input);
+
+  // specify and create the window to use
+  auto window = make_square_window(radius);
+
+  // Create a range over the windowed indicator for all pixels
+  auto window_view = make_moving_window_view(edge_density_tag(), window, &amp;amp;input);
+
+  // Create a range to simultaneously iterate over output and window_view
+  auto zip = make_zip_range(std::ref(output), std::ref(window_view));
+
+  // extract the indicator value for each pixel and assign to output
+  for (auto&amp; i : zip) {
+    auto&amp; output_i = std::get&lt;0&gt;(i);
+    auto&amp; window_i = std::get&lt;1&gt;(i);
+    output_i = window_i.extract().get();
+  }
+  return 0;
+}
+</code>
+
+    <para>The central element of the example is the window_view; this is a
+    range that allows iterating over all pixel locations in the raster
+    dataset. However, instead of giving access to the pixel values it gives
+    access to the indicator that summarizes the window surrounding the pixel.
+    At each iteration step the window moves along with the pixel.</para>
+
+    <para>The zip range makes it possible to iterate simultaneously over both
+    the output dataset and the moving window view of the input data set. Thus
+    at each step we can extract the indicator value and assign it to the
+    corresponding pixel in the output raster.</para>
+
+    <para>The<code> extract()</code> member function of the <code>window_view
+    </code>returns the indicator associated with
+    <code>edge_density_tag</code>, in this case for the square window with a
+    radius of 40 pixels. The additional <code>get()</code> is necessary
+    because the return type of <code>extract()</code> is a
+    <code>boost::optional</code>).</para>
+  </section>
