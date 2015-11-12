@@ -176,8 +176,8 @@ namespace moving_window {
       m_h_buffer.resize(size2(), m_initializer());
       m_add_h_buffer_iterator = m_h_view.begin();
       (*m_add_h_buffer_iterator) += size2();// Jump to the first line
-      // TODO: the case when m_radius > m_Rows;
-      for (index_type row = 1; row <= m_radius; ++row) {
+      // Done: the case when m_radius > m_Rows;
+      for (index_type row = 1; row <= std::min(size1(), m_radius); ++row) {
         auto h_buffer_iterator = m_h_buffer.begin();
         for (; h_buffer_iterator != m_h_buffer.end(); ++(*m_add_h_buffer_iterator), ++(h_buffer_iterator)) {
           m_add_h_buffer_iterator->add_to_indicator(*h_buffer_iterator);
@@ -192,8 +192,8 @@ namespace moving_window {
       m_add_v1_buffer_iterator = m_v1_view.begin();
       m_add_v2_buffer_iterator = m_v2_view.begin();
 
-      // TODO: the case when m_radius > m_Rows;
-      for (index_type row = 0; row <= m_radius; ++row) {
+      // done: the case when m_radius > m_Rows;
+      for (index_type row = 0; row <= std::min(size1(), m_radius); ++row) {
 
         auto v_buffer_iterator = m_v_buffer.begin();
         auto v2_buffer_iterator = m_v2_buffer.begin();
@@ -229,8 +229,9 @@ namespace moving_window {
       m_add_h_iterator = m_h_buffer.begin();
       m_add_v_iterator = m_v_buffer.begin();
 
-      // TODO: the case when m_radius > m_Cols;
-      for (int col = 0; col <= m_radius; ++col, ++(*m_add_h_iterator), ++(*m_add_v_iterator)) {
+      // done: the case when m_radius > m_Cols;
+      
+      for (int col = 0; col <= std::min(size2(), m_radius); ++col, ++(*m_add_h_iterator), ++(*m_add_v_iterator)) {
         m_indicator.add_subtotal(**m_add_h_iterator);
         m_indicator.add_subtotal(**m_add_v_iterator);
       }
@@ -253,8 +254,8 @@ namespace moving_window {
 
       m_bottom_right_iterator = m_h1_view.begin() + (m_radius + 1)*size2();
 
-      // TODO: the case when m_radius > m_Cols;
-      for (int col = 0; col <= m_radius; ++col, ++(*m_bottom_right_iterator), ++(*m_top_right_iterator))
+      // done: the case when m_radius > m_Cols;
+      for (int col = 0; col <= std::min(m_radius, size2()); ++col, ++(*m_bottom_right_iterator), ++(*m_top_right_iterator))
       {
         m_bottom_right_iterator->add_to_indicator(m_indicator);
         m_top_right_iterator->add_to_indicator(m_indicator);
@@ -528,7 +529,7 @@ namespace moving_window {
       m_bottom_right_iterator = m_h1_view.begin() + size2() * bottomrow;
       m_top_right_iterator = m_h2_view.begin() + size2() * toprow;
 
-      // TODO: the case when m_radius > m_Cols;
+      // done: the case when m_radius > m_Cols;
       last = std::min(static_cast<int>(m_radius), static_cast<int>(size2()) - 1);
       if (m_bottom_right_iterator) {
         for (int col = 0; col <= last; ++col, ++(*m_bottom_right_iterator)) {
