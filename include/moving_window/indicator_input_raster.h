@@ -72,7 +72,7 @@ namespace moving_window {
 
 
     template<typename special_iterator = iterator>
-    special_iterator begin()
+    special_iterator begin() const
     {
       special_iterator i(m_Raster, m_WeightRaster);
       i.find_begin();
@@ -80,7 +80,7 @@ namespace moving_window {
     }
 
     template<typename special_iterator = iterator>
-    special_iterator end()
+    special_iterator end() const
     {
       special_iterator i(m_Raster, m_WeightRaster);
       i.find_end();

@@ -170,34 +170,34 @@ namespace moving_window {
     explicit zip_range(InRanges&&... rgs) : ranges(std::forward<InRanges>(rgs)...)
     { }
 
-    iterator begin()
+    iterator begin() const
     {
       return multi_begin(tuple_indices());
     }
 
-    iterator end()
+    iterator end() const 
     {
       return multi_end(tuple_indices());
     }
 
 
   private:
-    template<typename T> typename T::iterator single_begin(T& t)
+    template<typename T> typename T::iterator single_begin(T& t) const
     {
       return t.begin();
     }
 
-    template<typename T> typename T::iterator single_end(T& t)
+    template<typename T> typename T::iterator single_end(T& t) const
     {
       return t.end();
     }
 
-    template<int ...S> iterator multi_begin(seq<S...>)
+    template<int ...S> iterator multi_begin(seq<S...>) const
     {
       return iterator(single_begin(std::get<S>(ranges))...);
     }
 
-    template<int ...S> iterator multi_end(seq<S...>)
+    template<int ...S> iterator multi_end(seq<S...>) const
     {
       return iterator(single_end(std::get<S>(ranges))...);
     }
@@ -215,7 +215,7 @@ namespace moving_window {
   //Iterate over a range of ranges
   // TODO: this is not being used at teh moment, but should come in handy for 
   // distance weighted moving windows.
-  /* 
+   
   template<typename RangeRange>
   struct range_range_iterator
   {
@@ -342,7 +342,7 @@ namespace moving_window {
     return range_zip_range<RangeRange>(rr);
   }
 
-  */
+ 
 
 } //namespace moving_window 
 

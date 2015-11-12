@@ -53,7 +53,7 @@ namespace moving_window {
   {
     template <typename OrientationTag, typename ElementTag, typename AccessTag, typename Raster>
     typename raster_traits::iterator< OrientationTag, ElementTag, AccessTag, Raster>::type
-      begin(const Raster& r)
+      begin(Raster& r) 
     {
         typedef typename raster_traits::iterator< OrientationTag, ElementTag, AccessTag, Raster>::type
           iterator;
@@ -61,7 +61,7 @@ namespace moving_window {
     }
     template <typename OrientationTag, typename ElementTag, typename AccessTag, typename Raster>
     typename raster_traits::iterator< OrientationTag, ElementTag, AccessTag, Raster>::type
-      end(const Raster& r)
+      end(Raster& r)
     {
         typedef typename raster_traits::iterator< OrientationTag, ElementTag, AccessTag, Raster>::type
           iterator;
