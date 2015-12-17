@@ -28,6 +28,30 @@
 namespace blink {
   namespace moving_window {
 
+    template<class T, class Indicator>
+    void add_sample_to_indicator(std::true_type, Indicator& indicator, T& value)
+    {
+      indicator.add_sample(std::get<0>(value), std::get<1>(value));
+    }
+
+    template<class T, class Indicator>
+    void add_sample_to_indicator(std::false_type, Indicator& indicator, T& value)
+    {
+      indicator.add_sample(value);
+    }
+
+    template<class T, class Indicator>
+    void subtract_sample_from_indicator(std::true_type, Indicator& indicator, T& value)
+    {
+      indicator.subtract_sample(std::get<0>(value), std::get<1>(value));
+    }
+
+    template<class T, class Indicator>
+    void subtract_sample_from_indicator(std::false_type, Indicator& indicator, T& value)
+    {
+      indicator.subtract_sample(value);
+    }
+
     // forward declaration
     template<typename Raster,
       typename WeightRaster,
@@ -41,6 +65,7 @@ namespace blink {
     struct indicator_input_raster
     {
       // value_type ??
+      using is_weighted = std::true_type;
       using value_type_1 = blink::raster::raster_traits::value_type < Raster > ;
       using value_type_2 = blink::raster::raster_traits::value_type < WeightRaster > ;
 
@@ -104,6 +129,8 @@ namespace blink {
     template<typename Raster>
     struct indicator_input_raster < Raster, int >
     {
+      using is_weighted = std::false_type;
+
       using this_type = indicator_input_raster < Raster, int > ;
       using value_type = blink::raster::raster_traits::value_type < Raster > ;
       using coordinate_type = blink::raster::raster_traits::coordinate_type < Raster > ;

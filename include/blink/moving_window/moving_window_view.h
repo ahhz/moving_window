@@ -32,6 +32,11 @@
 
 namespace blink {
   namespace moving_window {
+    template<typename T>
+    struct indirect
+    {
+      using type = T;
+    };
 
     template< typename IndicatorTag, typename Window, typename Raster>
     struct moving_window_pixel_view
@@ -39,7 +44,9 @@ namespace blink {
       using element_type = typename indicator_traits<IndicatorTag>::element_type_tag;
       using input_type = Raster;
       using raster_type = typename input_type::raster_type;
-      using raster_value_type = blink::raster::raster_traits::value_type < raster_type > ;
+      
+
+      using raster_value_type = typename raster_type::value_type;
 
       using resolver = typename indicator_traits<IndicatorTag>::indicator < raster_value_type > ;
       using indicator = typename resolver::indicator_type;
@@ -84,8 +91,7 @@ namespace blink {
       using element_type = typename indicator_traits<IndicatorTag>::element_type_tag;
       using input_type = Raster;
       using raster_type = typename input_type::raster_type;
-      using raster_value_type = blink::raster::raster_traits::value_type < raster_type > ;
-
+      using raster_value_type = typename raster_type::value_type;
       using resolver = typename indicator_traits<IndicatorTag>::indicator < raster_value_type > ;
       using indicator = typename resolver::indicator_type;
       using initializer = typename resolver::initializer;
@@ -132,7 +138,9 @@ namespace blink {
       using input_type = typename indicator_input_raster < index_map_type
         , typename Raster::weight_raster_type > ;
       using raster_type = typename input_type::raster_type;
-      using raster_value_type = blink::raster::raster_traits::value_type < raster_type > ;
+      using raster_value_type = typename raster_type::value_type; 
+      // TODO the following does not work:
+      // using raster_value_type = blink::raster::raster_traits::value_type < raster_type >;
 
       using helper = typename moving_window_patch_view_helper < IndicatorTag > ;
 

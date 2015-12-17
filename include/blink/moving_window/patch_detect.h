@@ -107,16 +107,16 @@ namespace blink {
             while (!pixel_stack.empty())	{
               coordinate curr = pixel_stack.front(); pixel_stack.pop_front();
 
-              nb = curr + N; if (nb.row > 0)      rook_lambda();
-              nb = curr + S; if (nb.row < rows - 1) rook_lambda();
-              nb = curr + W; if (nb.col > 0)      rook_lambda();
-              nb = curr + E; if (nb.col < cols - 1) rook_lambda();
+              nb = curr + N; if (nb.row >= 0)      rook_lambda();
+              nb = curr + S; if (nb.row <= rows - 1) rook_lambda();
+              nb = curr + W; if (nb.col >= 0)      rook_lambda();
+              nb = curr + E; if (nb.col <= cols - 1) rook_lambda();
 
               if (std::is_same<DirectionTag, QueenTag>::value) { // compile time IF
-                nb = curr + NW; if (nb.row > 0 && nb.col > 0)            queen_lambda();
-                nb = curr + NE;	if (nb.row > 0 && nb.col < cols - 1)       queen_lambda();
-                nb = curr + SW; if (nb.row < rows - 1 && nb.col > 0)       queen_lambda();
-                nb = curr + SE; if (nb.row < rows - 1 && nb.col < cols - 1) 	queen_lambda();
+                nb = curr + NW; if (nb.row >= 0 && nb.col >= 0)            queen_lambda();
+                nb = curr + NE;	if (nb.row >= 0 && nb.col <= cols - 1)       queen_lambda();
+                nb = curr + SW; if (nb.row <= rows - 1 && nb.col >= 0)       queen_lambda();
+                nb = curr + SE; if (nb.row <= rows - 1 && nb.col <= cols - 1) 	queen_lambda();
               }
             } // while
 
