@@ -39,8 +39,8 @@
   <section>
     <title>Definition</title>
 
-    <para>The function is defined in
-    "blink/moving_window/moving_window_view.h".</para>
+    <para>The function is defined in "moving_window/moving_window_view.h".
+    </para>
   </section>
 
   <section>
@@ -64,9 +64,15 @@
 
     <para>The following creates a moving_window_view.</para>
 
-    <para><programlisting>auto ras = blink::moving_window::open_gdal_raster&lt;int&gt;("input.txt");
-auto win = blink::moving_window::make_window(moving_window::square_tag{}, 5);
-auto tag = blink::moving_window::area_weighted_patch_size_tag{};
-auto view = blink::moving_window::make_moving_window_view(tag, win, ras);</programlisting></para>
+    <para><programlisting>auto ras = moving_window::open_gdal_raster&lt;int&gt;("input.txt");
+auto win = moving_window::make_window(moving_window::square_tag(), 5);
+auto tag = moving_window::area_weighted_patch_size_tag();
+auto view = moving_window::make_moving_window_view(tag, win, ras);</programlisting></para>
+  </section>
+
+  <section>
+    <title>See Also</title>
+
+    <para>MovingWindowViewConcept</para>
   </section>
 </section>

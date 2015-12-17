@@ -1,555 +1,143 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Functions</title>
+<title>Concepts</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
-<link rel="prev" href="s05.html" title="Types">
-<link rel="next" href="s07.html" title="Concepts">
+<link rel="prev" href="s05.html" title="Functions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="spirit-nav">
-<a accesskey="p" href="s05.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="s07.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="s05.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idm1569120944"></a>Functions</h2></div></div></div>
+<a name="idm1568829760"></a>Concepts</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569120304">open_gdal_raster</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569108400">create_gdal_raster</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569095856">create_gdal_raster_from_model</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569083312">create_temp_gdal_raster</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569071280">create_temp_gdal_raster_from_model</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569058736">make_window</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569049136">make_moving_window_view</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569034544">make_zip_range</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568829120">Indicator</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568822976">Raster</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568806976">Window</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569120304"></a>open_gdal_raster</h3></div></div></div>
+<a name="idm1568829120"></a>Indicator</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569119664">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569116976">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569115824">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569114672">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569113136">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569111472">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569109680">See Also</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568828480">Summary</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568827328">Valid Expressions</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569119664"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename T&gt; gdal_raster&lt;T&gt;
-    open_gdal_raster(const boost::filesystem::path&amp; path, GDALAccess
-    access, int band = 1)</code></p>
-<p><code class="computeroutput">}</code></p>
+<a name="idm1568828480"></a>Summary</h4></div></div></div>
+<p>An Indicator class specifies how individual values are aggregated
+    into a summary statistic. I</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569116976"></a>Description</h4></div></div></div>
-<p>This function opens a TIFF raster file dataset at the specified path
-    and returns a gdal_raster&lt;T&gt; associated with the opened raster
-    dataset. The user must specify the type of access as either either
-    GAReadOnly or GAUpdate. Only a single band of the dataset is read, by
-    default this is the first band.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569115824"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/utility.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569114672"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD and fit within datatype of the raster
-    dataset.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569113136"></a>Preconditions</h4></div></div></div>
-<p>The file specified as <code class="computeroutput">path</code> must exist and be a geotiff
-    file.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569111472"></a>Example of use</h4></div></div></div>
-<p>The following example opens an int raster for read and write
-    access.</p>
-<pre class="programlisting">auto ras = moving_window::open_gdal_raster&lt;int&gt;("my_raster.tiff", GAUpdate);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569109680"></a>See Also</h4></div></div></div>
-<p>create_gdal_raster_from_model, create_temp_gdal_raster,
-    create_temp_gdal_raster_from_model, open_gdal_raster, gdal_raster</p>
+<a name="idm1568827328"></a>Valid Expressions</h4></div></div></div>
+<p>i.add_sample(e)</p>
+<p>i.add_sample(e, w)</p>
+<p>i.subtract_sample(e)</p>
+<p>i.subtract_sample(e,w)</p>
+<p>i.extract()</p>
+<p>i.add_subtotal(j)</p>
+<p>i.add_subtotal(j,w)</p>
+<p>i.subtract_subtotal(j)</p>
+<p>i.subtract_subtotal(j,w)</p>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569108400"></a>create_gdal_raster</h3></div></div></div>
+<a name="idm1568822976"></a>Raster</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569107760">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569104432">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569103280">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569102128">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569100592">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569098928">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569097136">See Also</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568822336">Summary</a></span></dt>
+<dt><span class="section"><a href="s06.html#idm1568820800">Valid Expressions</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569107760"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename T&gt; gdal_raster&lt;T&gt;
-    create_gdal_raster(const boost::filesystem::path&amp; path , int rows, int
-    cols)</code></p>
-<p><code class="computeroutput"> template&lt;typename T&gt; gdal_raster&lt;T&gt;
-    create_gdal_raster(const boost::filesystem::path&amp; path , int rows, int
-    cols, GDALDataType datatype)</code></p>
-<p><code class="computeroutput">}</code></p>
+<a name="idm1568822336"></a>Summary</h4></div></div></div>
+<p>The Moving Window library works with data that conforms to the
+    Raster Concept. Geographical raster layers carry information of the
+    spatial distribution of some variable. The data is stored in a matrix that
+    corresponds to a regular grid and where the each cell, or pixel,
+    corresponds to a square square geograpical area. To convert from matrix
+    indices to geographical coordinates it is necessary to know the
+    orientation of the grid, its corner coordinates and the size of each cell.
+    The moving window library is not concerned with these, because it assumes
+    that all raster layers that are used are identical in orientation, extent
+    and cell size.</p>
+<p>Thus a Raster is not more than a matrix. The operation on Raster
+    that are supported are to query the dimension of the matrix and to access
+    values. Specifically the moving window library needs to iterate over
+    pixels and edges (pairs of adjacent pixels). For this the Raster most have
+    associated views and iterators.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569104432"></a>Description</h4></div></div></div>
-<p>This function creates a TIFF raster file dataset at the specified
-    path and returns a gdal_raster&lt;T&gt; associated with the opened raster
-    dataset. There are two overloads of this function, either the user
-    specifies the datatype for the raster dataset, or a default is selected
-    based on the template argument T. </p>
+<a name="idm1568820800"></a>Valid Expressions</h4></div></div></div>
+<div class="table">
+<a name="idm1568820160"></a><p class="title"><b>Table&#160;1.1.&#160;</b></p>
+<div class="table-contents"><table class="table" summary="">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td>Expression</td>
+<td>Effect</td>
+<td>Default (moving_windows/raster_traits.h)</td>
+</tr>
+<tr>
+<td>blink::raster::raster_traits::value_type:value_type&lt;R&gt;</td>
+<td>the value type of raster elements</td>
+<td>R::value_type</td>
+</tr>
+<tr>
+<td>blink::raster::raster_traits::value_typecoordinate_type&lt;R&gt;</td>
+<td>the type used to give raster coordinate pairs, must conform
+            to the Coordinate concept (not documented)</td>
+<td>R::coordinate_type</td>
+</tr>
+<tr>
+<td>blink::raster::raster_traits::value_type::index_type&lt;R&gt;</td>
+<td>the type used give individual raster coordinates, must be
+            some integer type</td>
+<td>R::index_type</td>
+</tr>
+<tr>
+<td>blink::raster::raster_traits::iterator&lt;R&gt;</td>
+<td>erator type for the raster for the raster. </td>
+<td>R::iterator</td>
+</tr>
+<tr>
+<td>auto i = r.begin();</td>
+<td>return the iterator at the first element.</td>
+<td>);</td>
+</tr>
+<tr>
+<td>auto i = r.end();</td>
+<td>return the iterator past the last element.</td>
+<td>.r.end&lt;iterator&lt;ElementTag, OrientationTag,
+            AccessTag, R&gt;::type&gt;();</td>
+</tr>
+</tbody>
+</table></div>
 </div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569103280"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/utility.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569102128"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD and fit within the space associated. If
-    the datatype is not specified native_data_type&lt;T&gt;::type is the
-    default.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569100592"></a>Preconditions</h4></div></div></div>
-<p>The file specified as <code class="computeroutput">Path</code> must not exist, or if it
-    exists may not be opened. Any existing file will be deleted and replaced
-    by the new raster dataset</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569098928"></a>Example of use</h4></div></div></div>
-<p>The following example creates an integer raster of 50 rows by 75
-    columns.</p>
-<pre class="programlisting">auto ras = create_gdal_raster&lt;int&gt;("my_raster.tiff", 50,75);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569097136"></a>See Also</h4></div></div></div>
-<p>create_gdal_raster_from_model, create_temp_gdal_raster,
-    create_temp_gdal_raster_from_model, open_gdal_raster, gdal_raster</p>
+<br class="table-break"><p></p>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569095856"></a>create_gdal_raster_from_model</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569095216">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569091888">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569090736">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569089584">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569088048">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569086384">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569084592">See Also</a></span></dt>
-</dl></div>
+<a name="idm1568806976"></a>Window</h3></div></div></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="s06.html#idm1568806336">Summary</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569095216"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename T, typename U&gt; gdal_raster&lt;T&gt;
-    create_gdal_raster_from_model(const boost::filesystem::path&amp; path,
-    const gdal_raster&lt;U&gt;&amp; model)</code></p>
-<p><code class="computeroutput"> template&lt;typename T, typename U&gt; gdal_raster&lt;T&gt;
-    create_gdal_raster_from_model(const boost::filesystem::path&amp; path,
-    const gdal_raster&lt;U&gt;&amp; model, GDALDataType
-    datatype)</code></p>
-<p><code class="computeroutput">}</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569091888"></a>Description</h4></div></div></div>
-<p>This function creates a TIFF raster file dataset at the specified
-    path and returns a gdal_raster&lt;T&gt; associated with the opened raster
-    dataset. The created dataset has the same number of rows and columns as
-    the model dataset and also has the same spatial reference and cell size.
-    It does not copy over the values of model.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569090736"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/utility.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569089584"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD and fit within the space associated. If
-    the datatype is not specified native_data_type&lt;T&gt;::type is the
-    default.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569088048"></a>Preconditions</h4></div></div></div>
-<p>The file specified as <code class="computeroutput">path</code> must not exist, or if it
-    exists may not be opened. Any existing file will be deleted and replaced
-    by the new raster dataset</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569086384"></a>Example of use</h4></div></div></div>
-<p>The following example creates an integer raster that uses the same
-    grid as the input file "model.tiff".</p>
-<pre class="programlisting">auto model = open_gdal_dataset&lt;double&gt;("model.tiff");
-auto ras = create_gdal_raster_from_model&lt;int&gt;("my_raster.tiff", model);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569084592"></a>See Also</h4></div></div></div>
-<p>create_gdal_raster_from_model, create_temp_gdal_raster,
-    create_temp_gdal_raster_from_model, open_gdal_raster, gdal_raster</p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569083312"></a>create_temp_gdal_raster</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569082672">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569079344">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569078192">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569077040">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569075504">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569074352">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569072560">See Also</a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569082672"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename T&gt; gdal_raster&lt;T&gt;
-    create_temp_gdal_raster(int rows, int cols)</code></p>
-<p><code class="computeroutput"> template&lt;typename T&gt; gdal_raster&lt;T&gt;
-    create_temp_gdal_raster(int rows, int cols, GDALDataType
-    datatype)</code></p>
-<p><code class="computeroutput">}</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569079344"></a>Description</h4></div></div></div>
-<p>This function creates a temporary TIFF raster file dataset and
-    returns a gdal_raster&lt;T&gt; associated with the opened raster dataset.
-    Upon deletion of the gdal_raster, the dataset will be deleted too. There
-    are two overloads of this function, either the user specifies the datatype
-    for the raster dataset, or a default is selected based on the template
-    argument T.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569078192"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/utility.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569077040"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD and fit within the space associated. If
-    the datatype is not specified native_data_type&lt;T&gt;::type is the
-    default.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569075504"></a>Preconditions</h4></div></div></div>
-<p>None</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569074352"></a>Example of use</h4></div></div></div>
-<p>The following example creates an integer raster of 50 rows by 75
-    columns.</p>
-<pre class="programlisting">auto ras = create_temp_gdal_raster&lt;int&gt;(50,75);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569072560"></a>See Also</h4></div></div></div>
-<p>create_gdal_raster_from_model, create_temp_gdal_raster,
-    create_temp_gdal_raster_from_model, open_gdal_raster, gdal_raster</p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569071280"></a>create_temp_gdal_raster_from_model</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569070640">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569067312">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569066160">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569065008">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569063472">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569061808">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569060016">See Also</a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569070640"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename T, typename U&gt; gdal_raster&lt;T&gt;
-    create_temp_gdal_raster_from_model(const gdal_raster&lt;U&gt;&amp;
-    model)</code></p>
-<p><code class="computeroutput"> template&lt;typename T, typename U&gt; gdal_raster&lt;T&gt;
-    create_temp_gdal_raster_from_model(const gdal_raster&lt;U&gt;&amp; model,
-    GDALDataType datatype)</code></p>
-<p><code class="computeroutput">}</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569067312"></a>Description</h4></div></div></div>
-<p>This function creates a temporary TIFF raster file dataset and
-    returns a gdal_raster&lt;T&gt; associated with the opened raster dataset.
-    When the gdal_raster&lt;T&gt; is deleted, the associated dataset is
-    deleted too.The created dataset has the same number of rows and columns as
-    the model dataset and also has the same spatial reference and cell size.
-    It does not copy over the values of model.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569066160"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/utility.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569065008"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD and fit within the space associated. If
-    the datatype is not specified native_data_type&lt;T&gt;::type is the
-    default.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569063472"></a>Preconditions</h4></div></div></div>
-<p>The file specified as <code class="computeroutput">path</code> must not exist, or if it
-    exists may not be opened. Any existing file will be deleted and replaced
-    by the new raster dataset</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569061808"></a>Example of use</h4></div></div></div>
-<p>The following example creates an integer raster that uses the same
-    grid as the input file "model.tiff".</p>
-<pre class="programlisting">auto model = open_gdal_dataset&lt;double&gt;("model.tiff");
-auto ras = create_temp_gdal_raster_from_model&lt;int&gt;("my_raster.tiff");</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569060016"></a>See Also</h4></div></div></div>
-<p>create_gdal_raster_from_model, create_temp_gdal_raster,
-    create_temp_gdal_raster_from_model, open_gdal_raster, gdal_raster</p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569058736"></a>make_window</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569058096">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569054896">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569053744">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569052208">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569050416">See Also</a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569058096"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> square_window make_window(const square_tag&amp;, int
-    radius)</code></p>
-<p><code class="computeroutput"><p><code class="computeroutput"> circular_window make_window(const
-    circle_tag&amp;, double radius)</code></p>}</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569054896"></a>Description</h4></div></div></div>
-<p>Creates a window object that can be used in the
-    make_moving_window_view function. Depending on the overload either a
-    circular or a square window is created. For square windows, the radius is
-    the distance from side to the central pixel. </p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569053744"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/window.h"</p>
-<p>The tags square_tag and circle_tag are defined in
-    "moving_window/traits.h"</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569052208"></a>Example of use</h4></div></div></div>
-<p>The following example creates a window object that specifies a
-    circular window with a radius of 5 pixels.</p>
-<pre class="programlisting">auto win = moving_window::make_window(moving_window::circle_tag(), 5);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569050416"></a>See Also</h4></div></div></div>
-<p>make_moving_window_view</p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569049136"></a>make_moving_window_view</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569048496">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569042480">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569041328">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569040176">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569038768">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569037616">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569035824">See Also</a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569048496"></a>Prototype</h4></div></div></div>
-<p><code class="computeroutput">namespace moving_window {</code></p>
-<p><code class="computeroutput"> template&lt;typename IndicatorTag, typename Window, typename
-    Raster&gt; </code></p>
-<p><code class="computeroutput">moving_window_view&lt;IndicatorTag, Window, Raster&gt;
-    </code></p>
-<p><code class="computeroutput">make_moving_window_view(const IndicatorTag&amp;, Window&amp;
-    window , Raster* raster)</code></p>
-<p><code class="computeroutput"><p><code class="computeroutput"> </code></p>
-<p><code class="computeroutput">template&lt;typename
-    IndicatorTag, typename Window, typename Raster , typename WeightRaster&gt;
-    </code></p>
-<p><code class="computeroutput">moving_window_view&lt;IndicatorTag, Window,
-    Raster, WeightRaster&gt;
-    </code></p>
-<p><code class="computeroutput">make_moving_window_view(const IndicatorTag&amp;,
-    Window&amp; window , Raster* raster, WeightRaster*
-    weight)</code></p>}</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569042480"></a>Description</h4></div></div></div>
-<p>This function creates a moving_window_view object which presents a
-    view of the input raster (and optionally the weight raster) according to
-    the indicator specified by IndicatorTag and the window object (that
-    typically results from the make_window function.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569041328"></a>Definition</h4></div></div></div>
-<p>The function is defined in "moving_window/moving_window_view.h".
-    </p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569040176"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">Window must conform to the (not yet formalized) Window
-    concept. IndicatorTag must be a tag associated with a (not yet
-    formalized)IndicatorConcept class. Raster and WeightRaster must conform to
-    the (not yet formalized) raster concept, for instance
-    gdal_raster&lt;int&gt;</code></p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569038768"></a>Preconditions</h4></div></div></div>
-<p>Raster and WeightRaster must exist and have the same size</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569037616"></a>Example of use</h4></div></div></div>
-<p>The following creates a moving_window_view.</p>
-<pre class="programlisting">auto ras = moving_window::open_gdal_raster&lt;int&gt;("input.txt");
-auto win = moving_window::make_window(moving_window::square_tag(), 5);
-auto tag = moving_window::area_weighted_patch_size_tag();
-auto view = moving_window::make_moving_window_view(tag, win, ras);</pre>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569035824"></a>See Also</h4></div></div></div>
-<p>MovingWindowViewConcept</p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569034544"></a>make_zip_range</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s06.html#idm1569033520">Prototype</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569032368">Description</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569031216">Definition</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569030064">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569028912">Preconditions</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569027760">Complexity</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569026608">Example of use</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569025456">Notes</a></span></dt>
-<dt><span class="section"><a href="s06.html#idm1569024304">See Also</a></span></dt>
-</dl></div>
-<p>A page that documents a function has the following sections.</p>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569033520"></a>Prototype</h4></div></div></div>
-<p>the function's declaration.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569032368"></a>Description</h4></div></div></div>
-<p>A summary of what the function does.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569031216"></a>Definition</h4></div></div></div>
-<p>A link to the source code where the function is defined.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569030064"></a>Type requirements</h4></div></div></div>
-<p>Most functions in the STL are function templates. This section lists
-    the requirements that must be satisfied by the function's template
-    parameters. Sometimes the requirements can simply be expressed by listing
-    which concept a template parameter must conform to, but sometimes they are
-    more complicated and involve a relationship between two different template
-    parameters. In the case of find, for example, the requirements are that
-    the parameter InputIterator is a model of Input Iterator, that the
-    parameter EqualityComparable is a model of Equality Comparable, and that
-    comparison for equality is possible between objects of type
-    EqualityComparable and objects of InputIterator's value types.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569028912"></a>Preconditions</h4></div></div></div>
-<p>Functions usually aren't guaranteed to yield a well-defined result
-    for any possible input, but only for valid input; it is an error to call a
-    function with invalid input. This section describes the conditions for
-    validity.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569027760"></a>Complexity</h4></div></div></div>
-<p>Guarantees on the function's run-time complexity. For example,
-    find's run-time complexity is linear in the length of the input
-    range.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569026608"></a>Example of use</h4></div></div></div>
-<p>A code fragment that illustrates how to use the function.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569025456"></a>Notes</h4></div></div></div>
-<p>Footnotes (if any) that are referred to by other parts of the
-    page.</p>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569024304"></a>See Also</h4></div></div></div>
-<p>Links to other related pages.</p>
+<a name="idm1568806336"></a>Summary</h4></div></div></div>
+<p>A Window object specifies which surrounding pixels are involved in
+    the computation of an Indicator centred on a pixel.</p>
 </div>
 </div>
 </div>
@@ -559,7 +147,7 @@ auto view = moving_window::make_moving_window_view(tag, win, ras);</pre>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="s05.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="s07.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="s05.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
 </div>
 </body>
 </html>

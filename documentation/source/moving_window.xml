@@ -24,44 +24,14 @@
   <xi:include href="installation.xml" 
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-  <section>
-    <title>General</title>
-
-   
-    <xi:include href="supported_datatypes_for_raster_creation.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-  </section>
 
   <section>
     <title>Types</title>
 
-    <xi:include href="type_gdal_raster.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="type_zip_range.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-  
-  <xi:include href="type_zip_iterator.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
   </section>
 
   <section>
     <title>Functions</title>
-
-    <xi:include href="function_open_gdal_raster.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="function_create_gdal_raster.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="function_create_gdal_raster_from_model.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="function_create_temp_gdal_raster.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="function_create_temp_gdal_raster_from_model.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
     <xi:include href="function_make_window.xml"
                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
@@ -69,9 +39,7 @@
     <xi:include href="function_make_moving_window_view.xml"
                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-    <xi:include href="function_make_zip_range.xml"
-                xmlns:xi="http://www.w3.org/2001/XInclude"/>
-  </section>
+   </section>
  <section>
     <title>Concepts</title>
 	

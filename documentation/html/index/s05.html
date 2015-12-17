@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Types</title>
+<title>Functions</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
-<link rel="prev" href="s04.html" title="General">
-<link rel="next" href="s06.html" title="Functions">
+<link rel="prev" href="s04.html" title="Types">
+<link rel="next" href="s06.html" title="Concepts">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="spirit-nav">
@@ -15,303 +15,126 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idm1569178544"></a>Types</h2></div></div></div>
+<a name="idm1568853568"></a>Functions</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s05.html#idm1569177904"><em class="replaceable"><code>gdal_raster</code></em></a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569131056"><em class="replaceable"><code>zip_range</code></em></a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569126064"><em class="replaceable"><code>zip_iterator</code></em></a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568852928">make_window</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568843328">make_moving_window_view</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569177904"></a><em class="replaceable"><code>gdal_raster</code></em>
-</h3></div></div></div>
+<a name="idm1568852928"></a>make_window</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s05.html#idm1569177136">Description</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569175984">Example of use</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569174320">Definition</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569173168">Model of</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569172016">Type requirements</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569170480">Members</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568852288">Prototype</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568849088">Description</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568847936">Definition</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568846400">Example of use</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568844608">See Also</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569177136"></a>Description</h4></div></div></div>
-<p>This class provides an interface to file based raster datasets as
-    supported by the GDAL library. The interface is less flexible than the
-    underlying GDALDataSet but also simpler. Although GDAL supports a wide
-    range of data types, the class has not been tested with any other than
-    GEOTIFF.</p>
+<a name="idm1568852288"></a>Prototype</h4></div></div></div>
+<p><code class="computeroutput">namespace moving_window {</code></p>
+<p><code class="computeroutput"> square_window make_window(const square_tag&amp;, int
+    radius)</code></p>
+<p><code class="computeroutput"><p><code class="computeroutput"> circular_window make_window(const
+    circle_tag&amp;, double radius)</code></p>}</code></p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569175984"></a>Example of use</h4></div></div></div>
-<p>The example below calculates the mean value of an input
-    raster</p>
-<pre class="programlisting">gdal_raster&lt;int&gt; raster("input.tif", GAReadOnly);
-int sum = 0;
-for(auto i : raster){
-  sum += i;
-}
-int count = raster.size1() * raster.size2();
-double mean = static_cast&lt;double&gt;(sum) / count;</pre>
+<a name="idm1568849088"></a>Description</h4></div></div></div>
+<p>Creates a window object that can be used in the
+    make_moving_window_view function. Depending on the overload either a
+    circular or a square window is created. For square windows, the radius is
+    the distance from side to the central pixel. </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569174320"></a>Definition</h4></div></div></div>
-<p>&lt;moving_window/gdal_raster.h&gt;</p>
+<a name="idm1568847936"></a>Definition</h4></div></div></div>
+<p>The function is defined in "moving_window/window.h"</p>
+<p>The tags square_tag and circle_tag are defined in
+    "moving_window/traits.h"</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569173168"></a>Model of</h4></div></div></div>
-<p>Raster, Range</p>
+<a name="idm1568846400"></a>Example of use</h4></div></div></div>
+<p>The following example creates a window object that specifies a
+    circular window with a radius of 5 pixels.</p>
+<pre class="programlisting">auto win = moving_window::make_window(moving_window::circle_tag(), 5);</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569172016"></a>Type requirements</h4></div></div></div>
-<p><code class="computeroutput">T</code> must be POD. It has not been tested for anything but
-    : int, unsigned char, float, double.</p>
+<a name="idm1568844608"></a>See Also</h4></div></div></div>
+<p>make_moving_window_view</p>
+</div>
 </div>
 <div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1568843328"></a>make_moving_window_view</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s05.html#idm1568842688">Prototype</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568836672">Description</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568835520">Definition</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568834368">Type requirements</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568832960">Preconditions</a></span></dt>
+<dt><span class="section"><a href="s05.html#idm1568831808">Example of use</a></span></dt>
+</dl></div>
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569170480"></a>Members</h4></div></div></div>
-<div class="table">
-<a name="idm1569169712"></a><p class="title"><b>Table&#160;1.2.&#160;Member functions of gdal_raster</b></p>
-<div class="table-contents"><table class="table" summary="Member functions of gdal_raster">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th align="center">member function</th>
-<th align="center">usage</th>
-</tr></thead>
-<tbody>
-<tr>
-<td><p><code class="computeroutput">gdal_raster()</code></p></td>
-<td>default constructor, leaves the object in a useless but
-              valid state.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">gdal_raster(const
-              boost::filesystem::path&amp; file_path, GDALAccess access, int
-              band = 1)</code></p></td>
-<td>constructs a gdal_raster for the given file. Access must
-              be either GARead or GAUpdate. By default the first band in the
-              dataset is used.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">gdal_raster(GDALDataset * dataset, const
-              boost::filesystem::path&amp; file_path, int band = 1)
-              </code></p></td>
-<td>constructs a gdal_raster that wraps around an existing
-              GDALDataset. By default the first band in the dataset is
-              used.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">gdal_raster(gdal_raster&lt;T&gt;&amp;&amp;
-              other)</code></p></td>
-<td>move constructor (there is no copy constructor)</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">gdal_raster&amp;
-              operator=(gdal_raster&lt;T&gt;&amp;&amp;
-              other)</code></p></td>
-<td>move assignment (there is no copy assignment)</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">~gdal_raster()</code></p></td>
-<td>destructor, upon construction the dataset is flushed and
-              closed. Depending on a flag, the dataset may also be
-              deleted</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">void set_delete_on_close(bool
-              v)</code></p></td>
-<td>Sets the flag that determines whether the dataset will be
-              deleted on destruction. Initially this flag is always set to
-              false.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">bool get_delete_on_close()
-              const</code></p></td>
-<td>Reads the flag that determines whether the dataset will
-              be deleted on destruction.</td>
-</tr>
-<tr>
-<td>
-<p><code class="computeroutput">template&lt;typename Iterator&gt; Iterator
-              begin() const</code></p>
+<a name="idm1568842688"></a>Prototype</h4></div></div></div>
+<p><code class="computeroutput">namespace moving_window {</code></p>
+<p><code class="computeroutput"> template&lt;typename IndicatorTag, typename Window, typename
+    Raster&gt; </code></p>
+<p><code class="computeroutput">moving_window_view&lt;IndicatorTag, Window, Raster&gt;
+    </code></p>
+<p><code class="computeroutput">make_moving_window_view(const IndicatorTag&amp;, Window&amp;
+    window , Raster* raster)</code></p>
+<p><code class="computeroutput"><p><code class="computeroutput"> </code></p>
 <p><code class="computeroutput">template&lt;typename
-              Iterator&gt; Iterator begin()
-              </code></p>
-<p><code class="computeroutput">template&lt;typename Iterator&gt;
-              Iterator end()
-              const</code></p>
-<p><code class="computeroutput">template&lt;typename Iterator&gt;
-              Iterator end()</code></p>
-</td>
-<td>these are implementation details to help create
-              non-default iterators, do not use.</td>
-</tr>
-<tr>
-<td>
-<p><code class="computeroutput">iterator begin()
-              const</code></p>
-<p><code class="computeroutput">iterator begin()
-              </code></p>
-<p><code class="computeroutput">iterator end()
-              const</code></p>
-<p><code class="computeroutput">iterator
-              end()</code></p>
-</td>
-<td>these return begin and end values for the
-              <code class="computeroutput">gdal_iterator</code> that iterates row-by-row and within
-              rows column-by-column over all pixels.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">index_type size1()
-              const</code></p></td>
-<td>get the number of rows.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">index_type size2()
-              const</code></p></td>
-<td>get the number of columns.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">T get(const coordinate_type&amp; coord)
-              const</code></p></td>
-<td>get the value of an individual pixel.</td>
-</tr>
-<tr>
-<td><p><code class="computeroutput">void put(const coordinate_type&amp; coord,
-              const T&amp; value)</code></p></td>
-<td>set the value of an individual pixel.</td>
-</tr>
-<tr>
-<td>
-<p><code class="computeroutput">index_type block_size1()
-              const</code></p>
-<p><code class="computeroutput">index_type block_size2()
-              const</code></p>
-<p><code class="computeroutput">T get_pixel_in_block(index_type
-              block, index_type index_in_block) const
-              </code></p>
-<p><code class="computeroutput">void put_pixel_in_block(index_type
-              block, index_type index_in_block, const T&amp;
-              value)</code></p>
-</td>
-<td>these are implementation details that are used by
-              gdal_iterator, do not use.</td>
-</tr>
-<tr>
-<td><code class="computeroutput">const GDALDataset* get_gdal_dataset()
-              const</code></td>
-<td>get access to the underlying GDALDataset</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<p><br class="table-break"></p>
-<div class="table">
-<a name="idm1569136560"></a><p class="title"><b>Table&#160;1.3.&#160;Member types of gdal_raster</b></p>
-<div class="table-contents"><table class="table" summary="Member types of gdal_raster">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th align="center">typedef</th>
-<th align="center">equivalent</th>
-</tr></thead>
-<tbody><tr>
-<td><p><code class="computeroutput">iterator</code></p></td>
-<td><code class="computeroutput">gdal_iterator&lt;gdal_raster&lt;T&gt;
-              &gt;</code></td>
-</tr></tbody>
-</table></div>
-</div>
-<p><br class="table-break"></p>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569131056"></a><em class="replaceable"><code>zip_range</code></em>
-</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s05.html#idm1569129904">Description</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569128752">Example of use</a></span></dt>
-</dl></div>
-<p>zip_range&lt;typename ...Ranges&gt;</p>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569129904"></a>Description</h4></div></div></div>
-<p>A zip_range is used to iterate over a number of ranges in step. This
-    is not a full-fledged implementation and only allows for forward
-    iteration, which is sufficient for the moving_window library. Zip_nange is
-    essential to this library because the moving_window_views are
-    ranges.</p>
+    IndicatorTag, typename Window, typename Raster , typename WeightRaster&gt;
+    </code></p>
+<p><code class="computeroutput">moving_window_view&lt;IndicatorTag, Window,
+    Raster, WeightRaster&gt;
+    </code></p>
+<p><code class="computeroutput">make_moving_window_view(const IndicatorTag&amp;,
+    Window&amp; window , Raster* raster, WeightRaster*
+    weight)</code></p>}</code></p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569128752"></a>Example of use</h4></div></div></div>
-<p>The following iterates over two std::vectors. Note the use of the
-    free function make_zip_range and the std::ref wrappers to avoid
-    unnecessary copies of the input ranges.</p>
-<pre class="programlisting">std::vector&lt;int&gt; a = {1,2,3,4,5};
-std::vector&lt;int&gt; b = {100, 200, 300, 400, 500};
-auto zip_range = make_zip_range(std::ref(a), std::ref(b));
-for(auto&amp; i : zip_range)
-{
-  std::cout &lt;&lt; std::get&lt;0&gt;(i) + std::get&lt;1&gt;(i) &lt;&lt; std::endl;
-}</pre>
-<p>Output:</p>
-<pre class="programlisting">
-101
-202
-303
-404
-505</pre>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="idm1569126064"></a><em class="replaceable"><code>zip_iterator</code></em>
-</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s05.html#idm1569124912">Description</a></span></dt>
-<dt><span class="section"><a href="s05.html#idm1569123760">Example of use</a></span></dt>
-</dl></div>
-<p>zip_iterator&lt;typename ...Iters&gt;</p>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569124912"></a>Description</h4></div></div></div>
-<p>A zip_iters is used to iterate over a number of ranges in step. This
-    is not a full-fledged implementation and only allows for forward
-    iteration, which is sufficient for the moving_window library.</p>
+<a name="idm1568836672"></a>Description</h4></div></div></div>
+<p>This function creates a moving_window_view object which presents a
+    view of the input raster (and optionally the weight raster) according to
+    the indicator specified by IndicatorTag and the window object (that
+    typically results from the make_window function.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm1569123760"></a>Example of use</h4></div></div></div>
-<p>The following iterates over two std::vectors.</p>
-<pre class="programlisting">std::vector&lt;int&gt; a = {1,2,3,4,5};
-std::vector&lt;int&gt; b = {100, 200, 300, 400, 500};
-using iter = std::vector&lt;int&gt;::iterator;
-using zip = zip_iterator&lt;iter, iter&gt;;
-
-zip begin(a.begin(), b.begin());
-zip end(a.end(), b.end());
-for(zip i = begin; i != end; ++i)
-{
-  std::cout &lt;&lt; std::get&lt;0&gt;(*i) + std::get&lt;1&gt;(*i) &lt;&lt; std::endl;
-}</pre>
-<p>Output:</p>
-<pre class="programlisting">
-101
-202
-303
-404
-505</pre>
+<a name="idm1568835520"></a>Definition</h4></div></div></div>
+<p>The function is defined in
+    "blink/moving_window/moving_window_view.h".</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1568834368"></a>Type requirements</h4></div></div></div>
+<p><code class="computeroutput">Window must conform to the (not yet formalized) Window
+    concept. IndicatorTag must be a tag associated with a (not yet
+    formalized)IndicatorConcept class. Raster and WeightRaster must conform to
+    the (not yet formalized) raster concept, for instance
+    gdal_raster&lt;int&gt;</code></p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1568832960"></a>Preconditions</h4></div></div></div>
+<p>Raster and WeightRaster must exist and have the same size</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1568831808"></a>Example of use</h4></div></div></div>
+<p>The following creates a moving_window_view.</p>
+<pre class="programlisting">auto ras = blink::moving_window::open_gdal_raster&lt;int&gt;("input.txt");
+auto win = blink::moving_window::make_window(moving_window::square_tag{}, 5);
+auto tag = blink::moving_window::area_weighted_patch_size_tag{};
+auto view = blink::moving_window::make_moving_window_view(tag, win, ras);</pre>
 </div>
 </div>
 </div>
