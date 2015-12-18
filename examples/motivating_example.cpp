@@ -13,6 +13,7 @@
 
 #include <blink/moving_window/indicator/count.h>
 #include <blink/moving_window/indicator/edge_density.h>
+#include <blink/moving_window/indicator/edge_list.h>
 #include <blink/moving_window/indicator/area_weighted_patch_size.h>
 #include <blink/moving_window/moving_window_view.h>
 #include <blink/moving_window/window.h>
@@ -25,10 +26,10 @@
 
 int main()
 {
-  double radius = 3;
+  double radius = 1;
 
   // open a raster data set
-  auto input = blink::raster::open_gdal_raster<int>("copy.tif", GA_ReadOnly);
+  auto input = blink::raster::open_gdal_raster<int>("input.tif", GA_ReadOnly);
   /*
   auto copy = blink::raster::create_gdal_raster_from_model<int>("copy.tif", input);
 
@@ -47,7 +48,7 @@ int main()
   auto window = blink::moving_window::make_square_window(radius);
 
   // Create a range over the windowed indicator for all pixels
-  auto indicator_tag = blink::moving_window::area_weighted_patch_size_tag{};
+  auto indicator_tag = blink::moving_window::edge_density_tag{};
   auto window_view = blink::moving_window::make_moving_window_view(indicator_tag, window, &input);
 
   // Create a range to simultaneously iterate over output and window_view

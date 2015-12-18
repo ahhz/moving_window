@@ -72,11 +72,6 @@ namespace blink {
       // disallow copyassigning
       square_window_iterator& operator=(const square_window_iterator&) = delete;
 
-      const coordinate_type& get_coordinates() const
-      {
-        return m_coordinates;
-      }
-
       void find_end()
       {
         m_coordinates = coordinate_type(m_data->size1(), 0);
@@ -131,6 +126,10 @@ namespace blink {
         return m_indicator;
       }
         
+      const coordinate_type& get_coordinates() const
+      {
+        return m_coordinates;
+      }
       void moved_right()
       {
         add_col_to_indicator();

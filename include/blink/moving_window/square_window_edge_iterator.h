@@ -19,61 +19,58 @@
 #include <blink/moving_window/indicator_input_raster.h>
 #include <blink/moving_window/default_construction_functor.h>
 
-#include <blink/raster/edge_iterator.h>
-#include <blink/raster/raster_iterator.h>
 #include <blink/raster/raster_view.h>
-#include <blink/raster/gdal_raster_view.h>
 
 #include <boost/none_t.hpp>
 #include <boost/optional.hpp>
 
 #include <algorithm> // min max
-#include <utility> // pair
 #include <vector>
 
 namespace blink {
   namespace moving_window {
 
-    template<typename Indicator, typename IndicatorInputRaster>
+    template<class Indicator, class IndicatorInputRaster>
     class square_window_edge_iterator
       : public boost::iterator_facade
       < square_window_edge_iterator<Indicator, IndicatorInputRaster>
       , const Indicator
       , boost::forward_traversal_tag >
     {
-
-    public:
-      typedef square_window_edge_iterator<Indicator, IndicatorInputRaster> this_type;
-
-      typedef typename IndicatorInputRaster::coordinate_type coordinate_type;
-      typedef typename IndicatorInputRaster::index_type index_type;
-
-      typedef typename std::vector<Indicator>::iterator buf_iter_type;
-      typedef IndicatorInputRaster input_data_type;
+      const static bool do_outfacing = true;
+  
+      using this_type = square_window_edge_iterator < Indicator, IndicatorInputRaster > ;
+      using buf_iter_type = typename std::vector<Indicator>::iterator;
+      using input_data_type = IndicatorInputRaster;
+      using is_weighted = typename IndicatorInputRaster::is_weighted;
 
       // shorthand 
       using row_major = blink::raster::orientation::row_major;
-      typedef blink::raster::element::v_edge v_edge;
-      typedef blink::raster::element::v_edge_first_only v1_edge;
-      typedef blink::raster::element::v_edge_second_only v2_edge;
-      typedef blink::raster::element::h_edge h_edge;
-      typedef blink::raster::element::h_edge_first_only h1_edge;
-      typedef blink::raster::element::h_edge_second_only h2_edge;
-      typedef blink::raster::access::read_only read_only;
+      using v_edge = blink::raster::element::v_edge;
+      using v1_edge = blink::raster::element::v_edge_first_only;
+      using v2_edge = blink::raster::element::v_edge_second_only;
+      using h_edge = blink::raster::element::h_edge;
+      using h1_edge = blink::raster::element::h_edge_first_only;
+      using h2_edge = blink::raster::element::h_edge_second_only;
+      using read_only = blink::raster::access::read_only;
 
-      typedef blink::raster::raster_view<row_major, v_edge, read_only, input_data_type>  v_view;
-      typedef blink::raster::raster_view<row_major, v1_edge, read_only, input_data_type> v1_view;
-      typedef blink::raster::raster_view<row_major, v2_edge, read_only, input_data_type> v2_view;
-      typedef blink::raster::raster_view<row_major, h_edge, read_only, input_data_type>  h_view;
-      typedef blink::raster::raster_view<row_major, h1_edge, read_only, input_data_type> h1_view;
-      typedef blink::raster::raster_view<row_major, h2_edge, read_only, input_data_type> h2_view;
+      using v_view = blink::raster::raster_view < row_major, v_edge, read_only, input_data_type > ;
+      using v1_view = blink::raster::raster_view < row_major, v1_edge, read_only, input_data_type > ;
+      using v2_view = blink::raster::raster_view < row_major, v2_edge, read_only, input_data_type > ;
+      using h_view = blink::raster::raster_view < row_major, h_edge, read_only, input_data_type > ;
+      using h1_view = blink::raster::raster_view < row_major, h1_edge, read_only, input_data_type > ;
+      using h2_view = blink::raster::raster_view < row_major, h2_edge, read_only, input_data_type > ;
 
-      typedef typename  v_view::iterator  v_iterator;
-      typedef typename v1_view::iterator v1_iterator;
-      typedef typename v2_view::iterator v2_iterator;
-      typedef typename  h_view::iterator  h_iterator;
-      typedef typename h1_view::iterator h1_iterator;
-      typedef typename h2_view::iterator h2_iterator;
+      using v_iterator = typename  v_view::iterator;
+      using v1_iterator = typename v1_view::iterator;
+      using v2_iterator = typename v2_view::iterator;
+      using h_iterator = typename  h_view::iterator;
+      using h1_iterator = typename h1_view::iterator;
+      using h2_iterator = typename h2_view::iterator;
+
+    public:
+      using coordinate_type = typename IndicatorInputRaster::coordinate_type;
+      using index_type = typename IndicatorInputRaster::index_type;
 
       template<typename Squarewindow,
         typename Initializer = default_construction_functor<Indicator> >
@@ -84,10 +81,10 @@ namespace blink {
         , m_h_view(data), m_h1_view(data), m_h2_view(data)
         , m_radius(window.get_radius()), m_initializer(initializer)
       {
-        //find_begin();
       }
 
       square_window_edge_iterator(const square_window_edge_iterator&) = delete;
+
       square_window_edge_iterator& operator=(const square_window_edge_iterator&)
         = delete;
 
@@ -127,7 +124,6 @@ namespace blink {
         , m_bottom_right_iterator(that.m_bottom_right_iterator)
       {}
 
-
       index_type size1() const
       {
         return m_data->size1();
@@ -140,129 +136,39 @@ namespace blink {
       void find_end()
       {
         m_coordinates = coordinate_type(size1(), 0);
-        m_indicator = m_initializer();
-
-        // Clear all 4 buffers
-        m_h_buffer.clear();
-        m_v_buffer.clear();
-        m_v2_buffer.clear();
-        m_v1_buffer.clear();
-
-        // Set all 16 iterators to boost::none
-        m_add_h_buffer_iterator = boost::none;
-        m_add_v_buffer_iterator = boost::none;
-        m_add_v2_buffer_iterator = boost::none;
-        m_add_v1_buffer_iterator = boost::none;
-
-        m_subtract_h_buffer_iterator = boost::none;
-        m_subtract_v_buffer_iterator = boost::none;
-        m_subtract_v2_buffer_iterator = boost::none;
-        m_subtract_v1_buffer_iterator = boost::none;
-
-        m_add_h_iterator = boost::none;
-        m_add_v_iterator = boost::none;
-        m_subtract_v_iterator = boost::none;
-        m_subtract_h_iterator = boost::none;
-
-        m_top_right_iterator = boost::none;
-        m_bottom_right_iterator = boost::none;
-        m_top_left_iterator = boost::none;
-        m_bottom_left_iterator = boost::none;
       }
 
       void find_begin()
       {
-        m_coordinates = coordinate_type(0, 0);
-        m_indicator = m_initializer();
+        m_coordinates = coordinate_type{ 0, 0 };
 
         // Initialize buffer of horizontal edges for each column
         m_h_buffer.resize(size2(), m_initializer());
-        m_add_h_buffer_iterator = m_h_view.begin();
-        (*m_add_h_buffer_iterator) += size2();// Jump to the first line
-        // TODO: the case when m_radius > m_Rows;
-        for (index_type row = 1; row <= m_radius; ++row) {
-          auto h_buffer_iterator = m_h_buffer.begin();
-          for (; h_buffer_iterator != m_h_buffer.end(); ++(*m_add_h_buffer_iterator), ++(h_buffer_iterator)) {
-            m_add_h_buffer_iterator->add_to_indicator(*h_buffer_iterator);
-          }
-        }
 
         // Initialize 3 buffers of vertical edges for each column
         m_v_buffer.resize(size2() + 1, m_initializer());
-        m_v2_buffer.resize(size2() + 1, m_initializer());
         m_v1_buffer.resize(size2() + 1, m_initializer());
+        m_v2_buffer.resize(size2() + 1, m_initializer());
+
+        m_add_h_buffer_iterator = m_h_view.begin() + size2();// Skip first line of h2_edges
+
+        for (index_type row = 1; row <= m_radius; ++row) {
+          add_h_row_to_buffer();
+        }
+
         m_add_v_buffer_iterator = m_v_view.begin();
         m_add_v1_buffer_iterator = m_v1_view.begin();
         m_add_v2_buffer_iterator = m_v2_view.begin();
 
-        // TODO: the case when m_radius > m_Rows;
         for (index_type row = 0; row <= m_radius; ++row) {
-
-          auto v_buffer_iterator = m_v_buffer.begin();
-          auto v2_buffer_iterator = m_v2_buffer.begin();
-          auto v1_buffer_iterator = m_v1_buffer.begin();
-          for (; v_buffer_iterator != m_v_buffer.end();
-            ++(*m_add_v_buffer_iterator), ++(*m_add_v1_buffer_iterator), ++(*m_add_v2_buffer_iterator),
-            ++v_buffer_iterator, ++v2_buffer_iterator, ++v1_buffer_iterator)
-          {
-            bool first_col = m_add_v_buffer_iterator->get_coordinates().col == 0;
-            bool last_col = m_add_v_buffer_iterator->get_coordinates().col == size2(); // equal because there goes one more edge in a row than pixels
-
-            // What if only one col, or zero?
-            if (first_col) {
-              m_add_v2_buffer_iterator->add_to_indicator(*v2_buffer_iterator);
-
-            }
-            else if (last_col) {
-              m_add_v1_buffer_iterator->add_to_indicator(*v1_buffer_iterator);
-            }
-            else {
-              m_add_v_buffer_iterator->add_to_indicator(*v_buffer_iterator);
-              m_add_v1_buffer_iterator->add_to_indicator(*v1_buffer_iterator);
-              m_add_v2_buffer_iterator->add_to_indicator(*v2_buffer_iterator);
-            }
-          }
+          add_v_row_to_buffer();
         }
-
         m_subtract_h_buffer_iterator = boost::none;
         m_subtract_v_buffer_iterator = boost::none;
         m_subtract_v2_buffer_iterator = boost::none;
         m_subtract_v1_buffer_iterator = boost::none;
 
-        m_add_h_iterator = m_h_buffer.begin();
-        m_add_v_iterator = m_v_buffer.begin();
-
-        // TODO: the case when m_radius > m_Cols;
-        for (int col = 0; col <= m_radius; ++col, ++(*m_add_h_iterator), ++(*m_add_v_iterator)) {
-          m_indicator.add_subtotal(**m_add_h_iterator);
-          m_indicator.add_subtotal(**m_add_v_iterator);
-        }
-        m_subtract_h_iterator = boost::none;
-        m_subtract_v_iterator = boost::none;
-
-        // All the inner edges are included now. Remain the external edges.
-
-        m_v2_iterator = m_v2_buffer.begin();
-        m_v1_iterator = m_v1_buffer.begin() + (m_radius + 1);
-
-        m_indicator.add_subtotal(**m_v1_iterator);
-        m_indicator.add_subtotal(**m_v2_iterator);
-
-        m_v2_iterator = boost::none;
-
-        m_top_left_iterator = boost::none;
-        m_bottom_left_iterator = boost::none;
-        m_top_right_iterator = m_h2_view.begin();
-
-        m_bottom_right_iterator = m_h1_view.begin() + (m_radius + 1)*size2();
-
-        // TODO: the case when m_radius > m_Cols;
-        for (int col = 0; col <= m_radius; ++col, ++(*m_bottom_right_iterator), ++(*m_top_right_iterator))
-        {
-          m_bottom_right_iterator->add_to_indicator(m_indicator);
-          m_top_right_iterator->add_to_indicator(m_indicator);
-        }
-        //m_top_right_iterator = boost::none;
+        prepare_first_pixel_of_row();
       }
 
     private:
@@ -271,15 +177,11 @@ namespace blink {
       void  increment()
       {
         if (++m_coordinates.col != size2()) {
-          moved_right();
+          return moved_right();
         }
-        else if (++m_coordinates.row != size1()) {
-          m_coordinates.col = 0;
-          moved_down();
-        }
-        else {
-          find_end();
-
+        m_coordinates.col = 0;
+        if (++m_coordinates.row != size1()) {
+          return moved_down();
         }
       }
 
@@ -294,14 +196,211 @@ namespace blink {
       }
 
     private:
-      template<typename Iter>
-      void right_add(boost::optional<Iter>& iter, const Iter& end)
+      void add_h_row_to_buffer()
       {
-        if (iter) {
-          m_indicator.add_subtotal(**iter);
-          if (++(*iter) == end) {
-            iter = boost::none;
+        if (m_add_h_buffer_iterator) {
+          auto zip = blink::iterator::make_zip_range(
+            std::ref(m_h_buffer),
+            blink::iterator::make_zip_along_range(*m_add_h_buffer_iterator));
+          for (auto&& z : zip) {
+            typename h_iterator::value_type v = std::get<1>(z);
+            add_sample_to_indicator(is_weighted{}, std::get<0>(z), v);
           }
+          if (get_coordinates().row + m_radius + 1 == size1()) {
+            m_add_h_buffer_iterator = boost::none;
+          }
+        }
+      }
+
+      void subtract_h_row_from_buffer()
+      {
+        if (m_subtract_h_buffer_iterator) {
+
+          auto zip = blink::iterator::make_zip_range(
+            std::ref(m_h_buffer),
+            blink::iterator::make_zip_along_range(*m_subtract_h_buffer_iterator));
+
+          for (auto&& z : zip) {
+            typename h_iterator::value_type v = std::get<1>(z);
+            subtract_sample_from_indicator(is_weighted{}, std::get<0>(z), v);
+          }
+        }
+        else if (m_coordinates.row == m_radius) {
+          m_subtract_h_buffer_iterator = m_h_view.begin() + size2(); // next time round, start at second line.
+        }
+      }
+
+      void prepare_first_pixel_of_row()
+      {
+        m_add_h_iterator = m_h_buffer.begin();
+        m_add_v_iterator = m_v_buffer.begin();
+
+        m_indicator = m_initializer();
+
+        for (int col = 0; col <= m_radius; ++col) {
+          add_h_to_indicator();
+          add_v_to_indicator();
+        }
+        m_subtract_h_iterator = boost::none;
+        m_subtract_v_iterator = boost::none;
+
+         if (do_outfacing) {
+          m_v2_iterator = m_v2_buffer.begin();
+          m_v1_iterator = m_v1_buffer.begin() + (m_radius + 1);
+
+          m_indicator.add_subtotal(**m_v2_iterator);
+          m_indicator.add_subtotal(**m_v1_iterator);
+
+          m_v2_iterator = boost::none;
+       
+          index_type bottom_row = std::min<index_type>(m_coordinates.row + m_radius + 1, size1());
+          index_type top_row = std::max<index_type>(0, m_coordinates.row - m_radius);
+
+          m_bottom_right_iterator = m_h1_view.begin() + size2() * bottom_row;
+          m_top_right_iterator = m_h2_view.begin() + size2() * top_row;
+
+          for (int col = 0; col <= m_radius; ++col) {
+            add_bottom_right();
+            add_top_right();
+          }
+          m_top_left_iterator = boost::none;
+          m_bottom_left_iterator = boost::none;
+        }
+      }
+
+      void add_bottom_right()
+      {
+        if (m_bottom_right_iterator) {
+          m_bottom_right_iterator->add_to_indicator(m_indicator);
+          if (m_bottom_right_iterator->get_coordinates().col + 1 == size2()){
+            m_bottom_right_iterator = boost::none;
+          }
+          else {
+            ++(*m_bottom_right_iterator);
+          }
+        }
+      }
+
+      void add_top_right()
+      {
+        if (m_top_right_iterator) {
+          m_top_right_iterator->add_to_indicator(m_indicator);
+          if (m_top_right_iterator->get_coordinates().col + 1 == size2()){
+            m_top_right_iterator = boost::none;
+          }
+          else {
+            ++(*m_top_right_iterator);
+          }
+        }
+      }
+      void subtract_top_left()
+      {
+        if (m_top_left_iterator) {
+          m_top_left_iterator->subtract_from_to_indicator(m_indicator);
+          ++(*m_top_left_iterator);
+        }
+        else if (get_coordinates().col == m_radius) {
+          index_type top_row = std::max<index_type>(0, m_coordinates.row - m_radius);
+          m_top_left_iterator = m_h2_view.begin() + size2() * top_row;
+        }
+      }
+
+      void subtract_bottom_left()
+      {
+        if (m_bottom_left_iterator) {
+          m_bottom_left_iterator->subtract_from_to_indicator(m_indicator);
+          ++(*m_bottom_left_iterator);
+        }
+        else if (get_coordinates().col == m_radius) {
+          index_type bottom_row = std::min<index_type>(m_coordinates.row + m_radius + 1, size1());
+          m_bottom_left_iterator = m_h1_view.begin() + size2() * bottom_row;
+        }
+      }
+
+      void add_v_row_to_buffer()
+      {
+        if (m_add_v_buffer_iterator) {
+
+          auto zip = blink::iterator::make_zip_range(
+            std::ref(m_v_buffer),  //0
+            std::ref(m_v1_buffer),  //1
+            std::ref(m_v2_buffer),  //2
+            blink::iterator::make_zip_along_range(*m_add_v_buffer_iterator), //3
+            blink::iterator::make_zip_along_range(*m_add_v1_buffer_iterator),//4
+            blink::iterator::make_zip_along_range(*m_add_v2_buffer_iterator));//5
+
+          int count = 0;
+          for (auto&& z : zip)
+          {
+            if (count == 0) // first col
+            {
+              typename v2_iterator::value_type v2 = std::get<5>(z);
+              add_sample_to_indicator(is_weighted{}, std::get<2>(z), v2);
+            }
+            else if (count == size2()) // last col
+            {
+              typename v1_iterator::value_type v1 = std::get<4>(z);
+              add_sample_to_indicator(is_weighted{}, std::get<1>(z), v1);
+             }
+            else
+            {
+              typename v_iterator::value_type v = std::get<3>(z);
+              typename v1_iterator::value_type v1 = std::get<4>(z);
+              typename v2_iterator::value_type v2 = std::get<5>(z);
+              add_sample_to_indicator(is_weighted{}, std::get<0>(z), v);
+              add_sample_to_indicator(is_weighted{}, std::get<1>(z), v1);
+              add_sample_to_indicator(is_weighted{}, std::get<2>(z), v2);
+            }
+            ++count;
+          }
+          if (*m_add_v_buffer_iterator == m_v_view.end()){
+            m_add_v_buffer_iterator = boost::none;
+            m_add_v1_buffer_iterator = boost::none;
+            m_add_v2_buffer_iterator = boost::none;
+          }
+        }
+      }
+
+      void subtract_v_row_from_buffer()
+      {
+        if (m_subtract_v_buffer_iterator) {
+          auto zip = blink::iterator::make_zip_range(
+            std::ref(m_v_buffer),  //0
+            std::ref(m_v1_buffer),  //1
+            std::ref(m_v2_buffer),  //2
+            blink::iterator::make_zip_along_range(*m_subtract_v_buffer_iterator), //3
+            blink::iterator::make_zip_along_range(*m_subtract_v1_buffer_iterator),//4
+            blink::iterator::make_zip_along_range(*m_subtract_v2_buffer_iterator));//5
+
+          int count = 0;
+          for (auto&& z : zip)
+          {
+            if (count == 0) // first col
+            {
+              typename v2_iterator::value_type v2 = std::get<5>(z);
+              subtract_sample_from_indicator(is_weighted{}, std::get<2>(z), v2);
+            }
+            else if (count == size2()) // last col
+            {
+              typename v1_iterator::value_type v1 = std::get<4>(z);
+              subtract_sample_from_indicator(is_weighted{}, std::get<1>(z), v1);
+            }
+            else
+            {
+              typename v_iterator::value_type v = std::get<3>(z);
+              typename v1_iterator::value_type v1 = std::get<4>(z);
+              typename v2_iterator::value_type v2 = std::get<5>(z);
+              subtract_sample_from_indicator(is_weighted{}, std::get<0>(z), v);
+              subtract_sample_from_indicator(is_weighted{}, std::get<1>(z), v1);
+              subtract_sample_from_indicator(is_weighted{}, std::get<2>(z), v2);
+          }
+            ++count;
+          }
+        }
+        else if (get_coordinates().row == m_radius){
+          m_subtract_v_buffer_iterator = m_v_view.begin();
+          m_subtract_v1_buffer_iterator = m_v1_view.begin();
+          m_subtract_v2_buffer_iterator = m_v2_view.begin();
         }
       }
 
@@ -318,6 +417,16 @@ namespace blink {
         }
       }
 
+      void subtract_h_from_indicator()
+      {
+        left_subtract(m_subtract_h_iterator, m_h_buffer.begin(), m_radius + 1);
+      }
+          
+      void subtract_v_from_indicator()
+      {
+        left_subtract(m_subtract_v_iterator, m_v_buffer.begin(), m_radius);
+      }
+
       template<typename Iter>
       void move_left_border(boost::optional<Iter>& iter, Iter& begin, const index_type& offset)
       {
@@ -328,7 +437,6 @@ namespace blink {
         }
         else if (m_coordinates.col == offset) {
           iter = begin;
-          //	m_indicator.subtract_sample(*iter);
         }
       }
 
@@ -347,202 +455,55 @@ namespace blink {
         }
       }
 
-      void moved_right() // The row index has incremented already, now catch up indicator;
+      void add_h_to_indicator()
       {
-        if (get_coordinates().col == size2() - 1)
-        {
-          bool breakhere = true;
-        }
-        // INNER
-        // add horizontal edges at x + radius
-        right_add(m_add_h_iterator, m_h_buffer.end());
-
-        // add vertical edges at left of x + radius								
-        right_add(m_add_v_iterator, m_v_buffer.begin() + (m_v_buffer.size() - 1));
-
-        // subtract horizontal edges at x - radius - 1
-        left_subtract(m_subtract_h_iterator, m_h_buffer.begin(), m_radius + 1);
-
-        // subtract vertical edges at left of x - radius								
-        left_subtract(m_subtract_v_iterator, m_v_buffer.begin(), m_radius);
-
-        // OUTER
-        //add vertical edges (left special) left of  x - radius
-        move_left_border(m_v2_iterator, m_v2_buffer.begin(), m_radius);
-        move_right_border(m_v1_iterator, m_v1_buffer.end());
-
-        // Corners
-        if (m_top_left_iterator) {
-          m_top_left_iterator->subtract_from_to_indicator(m_indicator);
-          ++(*m_top_left_iterator);
-        }
-        else if (get_coordinates().col == m_radius) {
-          index_type toprow = std::max<index_type>(0, get_coordinates().row - m_radius);
-          m_top_left_iterator = m_h2_view.begin() + size2() * toprow;
-        }
-
-        if (m_bottom_left_iterator) {
-          m_bottom_left_iterator->subtract_from_to_indicator(m_indicator);
-          ++(*m_bottom_left_iterator);
-        }
-        else if (get_coordinates().col == m_radius) {
-          index_type bottomrow = std::min<index_type>(size1(), get_coordinates().row + m_radius + 1);
-          m_bottom_left_iterator = m_h1_view.begin() + size2()*bottomrow;
-        }
-
-        if (m_top_right_iterator) {
-          m_top_right_iterator->add_to_indicator(m_indicator);
-          if (m_top_right_iterator->get_coordinates().col + 1 == size2()){
-            m_top_right_iterator = boost::none;
-          }
-          else {
-            ++(*m_top_right_iterator);
+        if (m_add_h_iterator) {
+          m_indicator.add_subtotal(**m_add_h_iterator);
+          if (++(*m_add_h_iterator) == m_h_buffer.end()) {
+            m_add_h_iterator = boost::none;
           }
         }
-
-        if (m_bottom_right_iterator) {
-          m_bottom_right_iterator->add_to_indicator(m_indicator);
-          if (m_bottom_right_iterator->get_coordinates().col + 1 == size2()){
-            m_bottom_right_iterator = boost::none;
-          }
-          else {
-            ++(*m_bottom_right_iterator);
-          }
-        }
-
       }
 
-      void moved_down() // The col index has incremented already, now catch up indicator;
+      void add_v_to_indicator()
       {
-        if (get_coordinates().row == size1() - 1) {
-          bool breakhere = true;
-        }
-        // update 4 buffers (TODO: this contains a lot of code duplication)
-        if (m_add_h_buffer_iterator) {
-          auto h_buffer_iterator = m_h_buffer.begin();
-          for (; h_buffer_iterator != m_h_buffer.end(); ++(*m_add_h_buffer_iterator), ++h_buffer_iterator) {
-            m_add_h_buffer_iterator->add_to_indicator(*h_buffer_iterator);
-          }
-          if (get_coordinates().row + m_radius + 1 == size1()) {
-            m_add_h_buffer_iterator = boost::none;
-          }
-        }
-        if (m_subtract_h_buffer_iterator) {
-          auto h_buffer_iterator = m_h_buffer.begin();
-          for (; h_buffer_iterator != m_h_buffer.end(); ++(*m_subtract_h_buffer_iterator), ++h_buffer_iterator) {
-            m_subtract_h_buffer_iterator->subtract_from_to_indicator(*h_buffer_iterator);
-          }
-        }
-        else if (m_coordinates.row == m_radius) {
-          m_subtract_h_buffer_iterator = m_h_view.begin() + size2(); // next time round, start at second line.
-        }
-        if (m_add_v_buffer_iterator) {
-          auto v_buffer_iterator = m_v_buffer.begin();
-          auto v2_buffer_iterator = m_v2_buffer.begin();
-          auto v1_buffer_iterator = m_v1_buffer.begin();
-          for (; v_buffer_iterator != m_v_buffer.end();
-            ++(*m_add_v_buffer_iterator), ++(*m_add_v1_buffer_iterator), ++(*m_add_v2_buffer_iterator),
-            ++v_buffer_iterator, ++v2_buffer_iterator, ++v1_buffer_iterator)
-          {
-            bool first_col = m_add_v_buffer_iterator->get_coordinates().col == 0;
-            bool last_col = m_add_v_buffer_iterator->get_coordinates().col == size2(); // equal because there goes one more edge in a row than pixels
-            // What if only one col, or zero?
-            if (first_col) {
-              m_add_v2_buffer_iterator->add_to_indicator(*v2_buffer_iterator);
-
-            }
-            else if (last_col) {
-              m_add_v1_buffer_iterator->add_to_indicator(*v1_buffer_iterator);
-            }
-            else {
-              m_add_v_buffer_iterator->add_to_indicator(*v_buffer_iterator);
-              m_add_v1_buffer_iterator->add_to_indicator(*v1_buffer_iterator);
-              m_add_v2_buffer_iterator->add_to_indicator(*v2_buffer_iterator);
-            }
-          }
-          if (*m_add_v_buffer_iterator == m_v_view.end()){
-            m_add_v_buffer_iterator = boost::none;
-            m_add_v1_buffer_iterator = boost::none;
-            m_add_v2_buffer_iterator = boost::none;
-          }
-        }
-
-        if (m_subtract_v_buffer_iterator) {
-          auto v_buffer_iterator = m_v_buffer.begin();
-          auto v2_buffer_iterator = m_v2_buffer.begin();
-          auto v1_buffer_iterator = m_v1_buffer.begin();
-          for (; v_buffer_iterator != m_v_buffer.end();
-            ++(*m_subtract_v_buffer_iterator), ++(*m_subtract_v1_buffer_iterator),
-            ++(*m_subtract_v2_buffer_iterator),
-            ++v_buffer_iterator, ++v2_buffer_iterator, ++v1_buffer_iterator)
-          {
-            bool first_col = m_subtract_v_buffer_iterator->get_coordinates().col == 0;
-            bool last_col = m_subtract_v_buffer_iterator->get_coordinates().col == size2(); // equal because there goes one more edge in a row than pixels
-            // What if only one col, or zero?
-            if (first_col) {
-              m_subtract_v2_buffer_iterator->subtract_from_to_indicator(*v2_buffer_iterator);
-
-            }
-            else if (last_col) {
-              m_subtract_v1_buffer_iterator->subtract_from_to_indicator(*v1_buffer_iterator);
-            }
-            else {
-              m_subtract_v_buffer_iterator->subtract_from_to_indicator(*v_buffer_iterator);
-              m_subtract_v1_buffer_iterator->subtract_from_to_indicator(*v1_buffer_iterator);
-              m_subtract_v2_buffer_iterator->subtract_from_to_indicator(*v2_buffer_iterator);
-            }
-          }
-        }
-        else if (get_coordinates().row == m_radius){
-          m_subtract_v_buffer_iterator = m_v_view.begin();
-          m_subtract_v1_buffer_iterator = m_v1_view.begin();
-          m_subtract_v2_buffer_iterator = m_v2_view.begin();
-        }
-
-        m_add_h_iterator = m_h_buffer.begin();
-        m_add_v_iterator = m_v_buffer.begin();
-
-        m_indicator = m_initializer();
-
-        int last = std::min(static_cast<int>(m_radius), static_cast<int>(size2()) - 1);
-        for (int col = 0; col <= last; ++col, ++(*m_add_h_iterator), ++(*m_add_v_iterator)) {
-          m_indicator.add_subtotal(**m_add_h_iterator);
+        if (m_add_v_iterator) {
           m_indicator.add_subtotal(**m_add_v_iterator);
-        }
-        m_subtract_h_iterator = boost::none;
-        m_subtract_v_iterator = boost::none;
-
-        // All the inner edges are included now. Remain the external edges.
-
-        m_v2_iterator = m_v2_buffer.begin();
-        m_v1_iterator = m_v1_buffer.begin() + (m_radius + 1);
-
-        m_indicator.add_subtotal(**m_v2_iterator);
-        m_indicator.add_subtotal(**m_v1_iterator);
-
-        m_v2_iterator = boost::none;
-
-        m_top_left_iterator = boost::none;
-        m_bottom_left_iterator = boost::none;
-
-        index_type bottomrow = std::min<index_type>(m_coordinates.row + m_radius + 1, size1());
-        index_type toprow = std::max<index_type>(0, m_coordinates.row - m_radius);
-
-        m_bottom_right_iterator = m_h1_view.begin() + size2() * bottomrow;
-        m_top_right_iterator = m_h2_view.begin() + size2() * toprow;
-
-        // TODO: the case when m_radius > m_Cols;
-        last = std::min(static_cast<int>(m_radius), static_cast<int>(size2()) - 1);
-        if (m_bottom_right_iterator) {
-          for (int col = 0; col <= last; ++col, ++(*m_bottom_right_iterator)) {
-            m_bottom_right_iterator->add_to_indicator(m_indicator);
+          if (++(*m_add_v_iterator) == m_v_buffer.end() - 1) {
+            m_add_v_iterator = boost::none;
           }
         }
-        if (m_top_right_iterator) {
-          for (int col = 0; col <= last; ++col, ++(*m_top_right_iterator)) {
-            m_top_right_iterator->add_to_indicator(m_indicator);
-          }
+      }
+
+      void moved_right() // The row index has incremented already, now catch up indicator;
+      {
+          // INNER
+        add_h_to_indicator();
+        add_v_to_indicator();
+        subtract_h_from_indicator();
+        subtract_v_from_indicator();
+              
+        // OUTER
+        if (do_outfacing) {
+          move_left_border(m_v2_iterator, m_v2_buffer.begin(), m_radius);
+          move_right_border(m_v1_iterator, m_v1_buffer.end());
+
+          add_bottom_right();
+          add_top_right();
+          subtract_bottom_left();
+          subtract_top_left();
         }
+      }
+
+      void moved_down() 
+      {
+        add_h_row_to_buffer();
+        subtract_h_row_from_buffer();
+
+        add_v_row_to_buffer();
+        subtract_v_row_from_buffer();
+
+        prepare_first_pixel_of_row();
       }
 
       const coordinate_type& get_coordinates() const
@@ -603,7 +564,6 @@ namespace blink {
       boost::optional<h2_iterator> m_top_right_iterator, m_top_left_iterator;
       boost::optional<h1_iterator> m_bottom_left_iterator, m_bottom_right_iterator;
     };
-
-  } // namespace moving_window 
+  }  
 }
 #endif
