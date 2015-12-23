@@ -70,6 +70,11 @@ namespace blink {
         return -static_cast<index_type>(ceil(m_Radius));
       }
 
+      double get_radius() const
+      {
+        return m_Radius;
+      }
+
     private:
       double m_Radius;
       std::vector<std::vector<bool> > m_Include;

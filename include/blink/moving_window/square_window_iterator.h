@@ -10,7 +10,6 @@
 // The square_indow_iterator provides a generalized interface for patch
 // or pixel-based indicators
 //
-// TODO: Generalize this to a RectangleWindowIterator?
 
 #ifndef BLINK_MOVING_WINDOW_SQUARE_WINDOW_ITERATOR_H_AHZ
 #define BLINK_MOVING_WINDOW_SQUARE_WINDOW_ITERATOR_H_AHZ

@@ -11,6 +11,7 @@
 // need to iterate over one or two maps for moving window creation. The 
 // indicator_input_raster class can either have a weight or not.
 //
+// TODO indicator_input_view returns the size of the raster, rather than the size of the views.
 
 #ifndef BLINK_MOVING_WINDOW_INDICATOR_INPUT_RASTER_H_AHZ
 #define BLINK_MOVING_WINDOW_INDICATOR_INPUT_RASTER_H_AHZ
@@ -409,11 +410,11 @@ namespace blink {
       indicator_input_view(IndicatorInputRaster* raster = nullptr) : m_raster(raster)
       {}
 
-      int size1()const
+      std::ptrdiff_t size1() const
       {
         return blink::raster::raster_operations::size1(*m_raster);
       }
-      int size2()const
+      std::ptrdiff_t size2() const
       {
         return blink::raster::raster_operations::size2(*m_raster);
       }

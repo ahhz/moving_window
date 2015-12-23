@@ -22,7 +22,7 @@ namespace blink{
     template<typename T>
     struct count
     {
-      count() :m_count(0)
+      count() : m_count(0)
       {}
 
       typedef count<T> this_type;

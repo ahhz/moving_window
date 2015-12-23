@@ -25,6 +25,7 @@
 #include <blink/moving_window/window.h>
 #include <blink/moving_window/non_square_window_edge_iterator.h>
 #include <blink/moving_window/non_square_window_iterator.h>
+#include <blink/moving_window/circular_window_iterator.h>
 #include <blink/moving_window/square_window_edge_iterator.h>
 #include <blink/moving_window/square_window_iterator.h>
 
@@ -44,8 +45,7 @@ namespace blink {
       using element_type = typename indicator_traits<IndicatorTag>::element_type_tag;
       using input_type = Raster;
       using raster_type = typename input_type::raster_type;
-      
-
+   
       using raster_value_type = typename raster_type::value_type;
 
       using resolver = typename indicator_traits<IndicatorTag>::indicator < raster_value_type > ;
@@ -53,7 +53,7 @@ namespace blink {
       using initializer = typename resolver::initializer;
 
       using square_window_type = typename square_window_iterator < indicator, input_type > ;
-      using circle_window_type = typename non_square_window_iterator < indicator, input_type
+      using circle_window_type = typename circular_window_iterator < indicator, input_type
         , Window > ;
 
       using window_family_type = typename window_family<Window>::type;
