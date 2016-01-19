@@ -1,0 +1,180 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Concepts</title>
+<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Moving Window">
+<link rel="prev" href="s06.html" title="Functions">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav">
+<a accesskey="p" href="s06.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="idm1569022896"></a>Concepts</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s07.html#idm1569022256">Indicator</a></span></dt>
+<dt><span class="section"><a href="s07.html#idm1569016112">Raster</a></span></dt>
+<dt><span class="section"><a href="s07.html#idm1564723760">Window</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1569022256"></a>Indicator</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s07.html#idm1569021616">Summary</a></span></dt>
+<dt><span class="section"><a href="s07.html#idm1569020464">Valid Expressions</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1569021616"></a>Summary</h4></div></div></div>
+<p>An Indicator class specifies how individual values are aggregated
+    into a summary statistic. I</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1569020464"></a>Valid Expressions</h4></div></div></div>
+<p>i.add_sample(e)</p>
+<p>i.add_sample(e, w)</p>
+<p>i.subtract_sample(e)</p>
+<p>i.subtract_sample(e,w)</p>
+<p>i.extract()</p>
+<p>i.add_subtotal(j)</p>
+<p>i.add_subtotal(j,w)</p>
+<p>i.subtract_subtotal(j)</p>
+<p>i.subtract_subtotal(j,w)</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1569016112"></a>Raster</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="s07.html#idm1569015472">Summary</a></span></dt>
+<dt><span class="section"><a href="s07.html#idm1569013936">Associated Types</a></span></dt>
+<dt><span class="section"><a href="s07.html#idm1569012400">Valid Expressions</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1569015472"></a>Summary</h4></div></div></div>
+<p>The Moving Window library works with data that conforms to the
+    Raster Concept. Geographical raster layers carry information of the
+    spatial distribution of some variable. The data is stored in a matrix that
+    corresponds to a regular grid and where the each cell, or pixel,
+    corresponds to a square square geograpical area. To convert from matrix
+    indices to geographical coordinates it is necessary to know the
+    orientation of the grid, its corner coordinates and the size of each cell.
+    The moving window library is not concerned with these, because it assumes
+    that all raster layers that are used are identical in orientation, extent
+    and cell size. </p>
+<p>Thus a Raster is not more than a matrix. The operation on Raster
+    that are supported are to query the dimension of the matrix and to access
+    values. Specifically the moving window library needs to iterate over
+    pixels and edges (pairs of adjacent pixels). For this the Raster most have
+    associated views and iterators. </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1569013936"></a>Associated Types</h4></div></div></div>
+<p>The following types are used as tags to specify different forms of
+    iteration over rasters:</p>
+<p>moving_window::raster_iterator_tag::orientation::row_major;
+    moving_window::raster_iterator_tag::orientation::col_major;
+    moving_window::raster_iterator_tag::element::pixel;
+    moving_window::raster_iterator_tag::element::h_edge;
+    moving_window::raster_iterator_tag::element::h_edge_first_only;
+    moving_window::raster_iterator_tag::element::h_edge_second_only;
+    moving_window::raster_iterator_tag::element::v_edge;
+    moving_window::raster_iterator_tag::element::v_edge_first_only;
+    moving_window::raster_iterator_tag::element::v_edge_second_only;
+    moving_window::raster_iterator_tag::access::read_only;
+    moving_window::raster_iterator_tag::access::read_write; </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1569012400"></a>Valid Expressions</h4></div></div></div>
+<div class="table">
+<a name="idm1569011760"></a><p class="title"><b>Table&#160;1.4.&#160;</b></p>
+<div class="table-contents"><table class="table" summary="">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td>Expression</td>
+<td>Effect</td>
+<td>Default (moving_windows/raster_traits.h)</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::value_type&lt;R&gt;::type</td>
+<td>the value type of raster elements</td>
+<td>R::value_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::coordinate_type&lt;R&gt;::type</td>
+<td>the type used to give raster coordinate pairs, must conform
+            to the Coordinate concept (not documented)</td>
+<td>R::coordinate_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::index_type&lt;R&gt;::type</td>
+<td>the type used give individual raster coordinates, must be
+            some integer type</td>
+<td>R::index_type</td>
+</tr>
+<tr>
+<td>moving_windows::raster_traits::iterator&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;::type</td>
+<td>erator type for the raster for the raster. The tags must be
+            chosen from the following list given above.</td>
+<td>There is no default type for the pixel iterators, but the
+            edge iterators are by default derived from the pixel iterators (in
+            moving_window/edge_iterator.h).</td>
+</tr>
+<tr>
+<td>moving_windows::raster_operations::begin&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;(r)</td>
+<td>return the iterator characterized by the Tags at the begin
+            of he raster.</td>
+<td>r.begin&lt;iterator&lt;ElementTag, OrientationTag,
+            AccessTag, R&gt;::type&gt;();</td>
+</tr>
+<tr>
+<td>moving_windows::raster_operations::end&lt;ElementTag,
+            OrientationTag, AccessTag, R&gt;(r)</td>
+<td>return the iterator characterized by the Tags at the end of
+            he raster.</td>
+<td>r.end&lt;iterator&lt;ElementTag, OrientationTag, AccessTag,
+            R&gt;::type&gt;();</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p></p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="idm1564723760"></a>Window</h3></div></div></div>
+<div class="toc"><dl class="toc"><dt><span class="section"><a href="s07.html#idm1564723120">Summary</a></span></dt></dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="idm1564723120"></a>Summary</h4></div></div></div>
+<p>A Window object specifies which surrounding pixels are involved in
+    the computation of an Indicator centred on a pixel.</p>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="s06.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a>
+</div>
+</body>
+</html>

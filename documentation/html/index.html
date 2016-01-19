@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Chapter&#160;1.&#160;Moving Window</title>
+<link rel="stylesheet" href="boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Moving Window">
+<link rel="next" href="index/s02.html" title="Motivating Example">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="spirit-nav"><a accesskey="n" href="index/s02.html"><img src="images/next.png" alt="Next"></a></div>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="any"></a>Chapter&#160;1.&#160;<em class="replaceable"><code>Moving Window</code></em>
+</h2></div>
+<div><div class="author"><h3 class="author"><span class="firstname"><em class="replaceable"><code>Alex Hagen-Zanker</code></em></span></h3></div></div>
+</div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="section"><a href="index.html#idm1568865472">Introduction</a></span></dt>
+<dt><span class="section"><a href="index/s02.html">Motivating Example</a></span></dt>
+<dt><span class="section"><a href="index/s03.html">Installation</a></span></dt>
+<dt><span class="section"><a href="index/s04.html">Types</a></span></dt>
+<dt><span class="section"><a href="index/s05.html">Functions</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="index/s05.html#idm1568852928">make_window</a></span></dt>
+<dt><span class="section"><a href="index/s05.html#idm1568843328">make_moving_window_view</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="index/s06.html">Concepts</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="index/s06.html#idm1568829120">Indicator</a></span></dt>
+<dt><span class="section"><a href="index/s06.html#idm1568822976">Raster</a></span></dt>
+<dt><span class="section"><a href="index/s06.html#idm1568806976">Window</a></span></dt>
+</dl></dd>
+</dl>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="idm1568865472"></a>Introduction</h2></div></div></div>
+<p>Moving window analysis is commonly seen as a useful means of achieving
+  scale-sensitive geographical analysis. The implementation of efficient
+  moving window analysis on raster layers is not trivial however and
+  computational difficulties may be a hurdle to appling moving windows in
+  practice. The Moving Window library aims to alleviate such hurdles by
+  offering concepts, functions and classess for <span class="emphasis"><em>generic moving
+  window analysis on raster date</em></span>. With a relatively small effort,
+  users should be able to apply moving window analysis for a number of
+  built-in indicators or develop and apply custom moving window indicators. At
+  the moment the library is proof-of-concept and the documentation is limited
+  to the use of built-in indicators. Please contact me
+  (a.hagen-zanker@surrey.ac.uk) if you are interested in using this for your
+  work or research.</p>
+<p><span class="emphasis"><em>Note:</em></span> This is not a Boost library or intended to
+  become one, I am just trying to use the tools recommended on the <a href="http://http://rrsd.com/blincubator.com/" target="_top">Boost Library
+  Incubator</a>.</p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: July 12, 2008 at 20:16:17 +0100</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="index/s02.html"><img src="images/next.png" alt="Next"></a></div>
+</body>
+</html>
