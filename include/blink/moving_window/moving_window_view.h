@@ -26,6 +26,7 @@
 #include <blink/moving_window/non_square_window_edge_iterator.h>
 #include <blink/moving_window/non_square_window_iterator.h>
 #include <blink/moving_window/circular_window_iterator.h>
+#include <blink/moving_window/circular_window_edge_iterator.h>
 #include <blink/moving_window/square_window_edge_iterator.h>
 #include <blink/moving_window/square_window_iterator.h>
 

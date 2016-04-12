@@ -42,15 +42,15 @@ namespace blink {
     private:
      using  input_data_type = Raster;
 
-     using blink::raster::orientation::row_major;
-     using blink::raster::orientation::col_major;
-     using blink::raster::element::v_edge v_edge;
-     using blink::raster::element::v_edge_first_only;
-     using blink::raster::element::v_edge_second_only;
-     using blink::raster::element::h_edge;
-     using blink::raster::element::h_edge_first_only;
-     using blink::raster::element::h_edge_second_only;
-     using blink::raster::access::read_only;
+     using row_major = blink::raster::orientation::row_major;
+     using col_major = blink::raster::orientation::col_major;
+     using v_edge = blink::raster::element::v_edge;
+     using v1_edge = blink::raster::element::v_edge_first_only;
+     using v2_edge = blink::raster::element::v_edge_second_only;
+     using h_edge = blink::raster::element::h_edge;
+     using h1_edge = blink::raster::element::h_edge_first_only;
+     using h2_edge = blink::raster::element::h_edge_second_only;
+     using read_only = blink::raster::access::read_only;
 
      using v_view    = blink::raster::raster_view<row_major, v_edge,  read_only, input_data_type>;
      using v1_view   = blink::raster::raster_view<row_major, v1_edge, read_only, input_data_type>;
@@ -94,7 +94,7 @@ namespace blink {
 
      // .first gives the offset relative to the current position of the iterator
      // .second gives the iterator at the offset position. Provided it is within the raster.
-     using coordinate_type  = ct;
+     using ct = coordinate_type;
      using v_iterator_vector = std::vector<std::pair<ct, opt_v_iterator> >;
      using v1_iterator_vector = std::vector<std::pair<ct, opt_v1_iterator> >;
      using v2_iterator_vector = std::vector<std::pair<ct, opt_v2_iterator> >;
@@ -110,7 +110,7 @@ namespace blink {
    
     public:
       template<typename Initializer = default_construction_functor<Indicator> >
-      circular_window_iterator(Window& window, Raster* data
+      circular_window_edge_iterator(Window& window, Raster* data
         , Initializer initializer = Initializer()) : m_data(data)
         , m_data_trans(data)
         , m_v_view(data), m_v1_view(data), m_v2_view(data), m_h_view(data), m_h1_view(data), m_h2_view(data)
@@ -262,7 +262,7 @@ namespace blink {
         }
       }
 
-      bool equal(const circular_window_iterator& that) const
+      bool equal(const circular_window_edge_iterator& that) const
       {
         return m_coordinates == that.m_coordinates;
       }
